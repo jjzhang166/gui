@@ -13,6 +13,7 @@ target[
 
 #include "test.h"
 #include "window-custom.h"
+#include "window-system.h"
 
 namespace
 	{
@@ -43,6 +44,11 @@ void Gui::Test::init(Herbs::Directory&& dir)
 	mainwin->moveRelative(Vector::Vector2d<float>(0,0)
 		,Vector::Vector2d<float>(0.5,0.5));
 	mainwin->show(Window::DisplayNormal);
+	
+	Window* edit=WindowSystem::create(*this,STRSYS("EDIT"),0
+		,Window::StyleChild|Window::StyleBorder|Window::StyleVisible,mainwin);
+	edit->sizeAbsolute(200,32);
+	edit->moveRelative(Vector::Vector2d<float>(0,0),Vector::Vector2d<float>(0.5,0.5));
 	}
 
 Gui::Test::~Test()

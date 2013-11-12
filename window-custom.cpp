@@ -10,24 +10,24 @@ namespace
 	{
 	static const charsys_t* classname=STRSYS("Gui::WindowCustom::baseclassname");
 	static const charsys_t* propname=STRSYS("Gui::WindowCustom::data");
-	}
 	
-size_t Gui::WindowCustom::eventCallback(void* handle,uint32_t event_type
-	,size_t param_0,size_t param_1)
-	{
-	WindowCustom* obj=(WindowCustom*)GetProp((HWND)handle,propname);
-	if(obj==nullptr)
-		{return DefWindowProc((HWND)handle,event_type,param_0,param_1);}
-	switch(event_type)
+	LRESULT CALLBACK eventCallback(HWND handle,UINT event_type
+		,WPARAM param_0,LPARAM param_1)
 		{
-		case WM_DESTROY:
-			delete obj;
-			break;
-		default:
-		//	asm("nop");
-			return obj->onEvent(event_type,param_0,param_1);
-		}
-	return DefWindowProc((HWND)handle,event_type,param_0,param_1);
+		Gui::WindowCustom* obj=(Gui::WindowCustom*)GetProp(handle,propname);
+		if(obj==nullptr)
+			{return DefWindowProc(handle,event_type,param_0,param_1);}
+		switch(event_type)
+			{
+			case WM_DESTROY:
+				delete obj;
+				break;
+			default:
+				return obj->onEvent(event_type,param_0,param_1);
+			}
+		return DefWindowProc(handle,event_type,param_0,param_1);
+		}	
+	
 	}
 	
 void Gui::WindowCustom::init()
@@ -38,7 +38,7 @@ void Gui::WindowCustom::init()
 	wndclass.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);
 	wndclass.hCursor=LoadCursor(NULL,IDC_ARROW);
 	wndclass.hInstance=GetModuleHandle(NULL);
-	wndclass.lpfnWndProc=(WNDPROC)eventCallback;
+	wndclass.lpfnWndProc=eventCallback;
 	wndclass.lpszClassName=classname;
 
 	if(!RegisterClassEx(&wndclass))

@@ -25,10 +25,6 @@ namespace Gui
 			
 		protected:
 			WindowCustom(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);
-			
-		private:			
-			static size_t eventCallback(void* handle,uint32_t event_type
-				,size_t param_0,size_t param_1);			
 		};
 	}
 
