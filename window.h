@@ -81,10 +81,6 @@ namespace Gui
 			static unsigned int const DisplayOtherzoom=2;
 			static unsigned int const DisplayParentopening=3;
 			static unsigned int const DisplayOtherunzoom=4;
-			static unsigned int const DisplayScrollchildren=0x0001;
-			static unsigned int const DisplayInvalidate=0x0002;
-			static unsigned int const DisplayErase=0x0004;
-			static unsigned int const DisplaySmoothscroll=0x0010;
 			
 			
 			/**Sets a new window style.
