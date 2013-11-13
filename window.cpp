@@ -103,6 +103,11 @@ Vector::Vector2d<int> Gui::Window::sizeClientGet() const
 	GetClientRect((HWND)handle,&winrect);
 	return Vector::Vector2d<int>(winrect.right-winrect.left,winrect.bottom-winrect.top);
 	}
+
+Vector::Vector2d<int> Gui::Window::sizeClientFromParam1(size_t param_1)
+	{
+	return Vector::Vector2d<int>(LOWORD(param_1),HIWORD(param_1));
+	}
 	
 Vector::Vector2d<int> Gui::Window::sizeWindowGet() const
 	{

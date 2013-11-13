@@ -61,6 +61,8 @@ namespace Gui
 			
 			Vector::Vector2d<int> sizeClientGet() const;
 			
+			static Vector::Vector2d<int> sizeClientFromParam1(size_t param_1);
+			
 			Vector::Vector2d<int> sizeWindowGet() const;
 			
 			/**Shows the window.

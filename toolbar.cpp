@@ -31,7 +31,6 @@ Gui::Toolbar& Gui::Toolbar::buttonAdd(const char_t* text)
 	button.iString=(INT_PTR)text;
 	SendMessage((HWND)handle,TB_BUTTONSTRUCTSIZE,sizeof(TBBUTTON),0);
 	SendMessage((HWND)handle,TB_ADDBUTTONS,1,(LPARAM)&button);
-	SendMessage((HWND)handle,TB_AUTOSIZE,0,0);
 	++n_buttons;
 	return *this;
 	}

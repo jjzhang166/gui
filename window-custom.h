@@ -22,7 +22,7 @@ namespace Gui
 			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 				{return doDefaultAction(event_type,param_0,param_1);}
 				
-			/**This method is called when a user issues a command
+			/**This method is called when a user issues a command.
 			*/
 			virtual void onCommand(uint32_t event_status,uint32_t command_id,Window& source)
 				{}

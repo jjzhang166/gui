@@ -12,14 +12,14 @@ target[
 
 
 #include "test.h"
-#include "window-custom.h"
+#include "viewsplit.h"
 #include "toolbar.h"
 
 #include <cstdio>
 
 namespace
 	{
-	class Testwin:public Gui::WindowCustom
+	class Testwin:public Gui::ViewSplit
 		{
 		public:
 			static Testwin* create(Gui::Gui& gui_obj)
@@ -29,20 +29,22 @@ namespace
 				
 			void onCommand(uint32_t event_status,uint32_t control_id,Window& source)
 				{
-				printf("%u %u %u\n",event_status,control_id,source.idGet());
 				}
-			
-		/*	size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)
-				{
-				switch(event_type)
-					{
-					case Window::MessageCommand:
-						break;
-					}
-				return doDefaultAction(event_type,param_0,param_1);
-				}*/
+				
 		private:
-			Testwin(Gui::Gui& gui_obj):Gui::WindowCustom(gui_obj,0,0,nullptr){}
+			Testwin(Gui::Gui& gui_obj):Gui::ViewSplit(gui_obj,0,0,nullptr)
+				{
+				Gui::Toolbar* tools=Gui::Toolbar::create(gui_obj,0
+					,Window::StyleChild|Window::StyleVisible,this);
+				tools->buttonAdd(STR("Hello")).buttonAdd(STR("World"));
+				firstSet(*tools);
+				
+				Gui::WindowSystem* textbox=Gui::WindowSystem::create(gui_obj
+					,STRSYS("EDIT"),0
+					,Window::StyleBorder|Window::StyleChild|Window::StyleVisible
+					,this);
+				secondSet(*textbox);
+				}
 		};
 	}
 
@@ -52,18 +54,11 @@ void Gui::Test::init(Herbs::Directory&& dir)
 	Toolbar::init();
 	mainwin=Testwin::create(*this);
 	mainwin->popup();
-	mainwin->sizeRelative(0.33,0.33);
+	mainwin->sizeRelative(0.61,0.61);
 	mainwin->titleSet(STR("Gui test"));
 	mainwin->moveRelative(Vector::Vector2d<float>(0,0)
 		,Vector::Vector2d<float>(0.5,0.5));
 	mainwin->show(Window::DisplayNormal);
-	
-	Toolbar::init();
-	Toolbar* toolbar=Toolbar::create
-		(*this,0,Window::StyleChild|Window::StyleVisible,mainwin);
-	
-	toolbar->buttonAdd(STR("Hello")).buttonAdd(STR("Goodbye")).idSet(1);
-
 	}
 
 Gui::Test::~Test()
