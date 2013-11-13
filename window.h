@@ -60,77 +60,78 @@ namespace Gui
 			
 			/**Shows the window.
 			*/
-			void show(uint32_t options);
+			void show(int options);
 			
-			static unsigned int const DisplayHide=0;
-			static unsigned int const DisplayShownormal=1;
-			static unsigned int const DisplayNormal=1;
-			static unsigned int const DisplayShowminimized=2;
-			static unsigned int const DisplayShowmaximized=3;
-			static unsigned int const DisplayMaximize=3;
-			static unsigned int const DisplayShownoactivate=4;
-			static unsigned int const DisplayShow=5;
-			static unsigned int const DisplayMinimize=6;
-			static unsigned int const DisplayShowminnoactive=7;
-			static unsigned int const DisplayShowna=8;
-			static unsigned int const DisplayRestore=9;
-			static unsigned int const DisplayShowdefault=10;
-			static unsigned int const DisplayForceminimize=11;
-			static unsigned int const DisplayMax=11;
-			static unsigned int const DisplayParentclosing=1;
-			static unsigned int const DisplayOtherzoom=2;
-			static unsigned int const DisplayParentopening=3;
-			static unsigned int const DisplayOtherunzoom=4;
+			static const int DisplayHide=0;
+			static const int DisplayShownormal=1;
+			static const int DisplayNormal=1;
+			static const int DisplayShowminimized=2;
+			static const int DisplayShowmaximized=3;
+			static const int DisplayMaximize=3;
+			static const int DisplayShownoactivate=4;
+			static const int DisplayShow=5;
+			static const int DisplayMinimize=6;
+			static const int DisplayShowminnoactive=7;
+			static const int DisplayShowna=8;
+			static const int DisplayRestore=9;
+			static const int DisplayShowdefault=10;
+			static const int DisplayForceminimize=11;
+			static const int DisplayMax=11;
+			static const int DisplayParentclosing=1;
+			static const int DisplayOtherzoom=2;
+			static const int DisplayParentopening=3;
+			static const int DisplayOtherunzoom=4;
 			
 			
 			/**Sets a new window style.
 			*/
-			void styleSet(unsigned int style,unsigned int style_ex);
+			void styleSet(uint32_t style_0,uint32_t);
 			
 			///*Styles
-			static unsigned long int const StyleOverlapped=0x00000000;
-			static unsigned long int const StylePopup=0x80000000;
-			static unsigned long int const StyleChild=0x40000000;
-			static unsigned long int const StyleMinimize=0x20000000;
-			static unsigned long int const StyleVisible=0x10000000;
-			static unsigned long int const StyleDisabled=0x08000000;
-			static unsigned long int const StyleClipsiblings=0x04000000;
-			static unsigned long int const StyleClipchildren=0x02000000;
-			static unsigned long int const StyleMaximize=0x01000000;
-			static unsigned long int const StyleCaption=0x00c00000;
-			static unsigned long int const StyleBorder=0x00800000;
-			static unsigned long int const StyleDlgframe=0x00400000;
-			static unsigned long int const StyleVscroll=0x00200000;
-			static unsigned long int const StyleHscroll=0x00100000;
-			static unsigned long int const StyleSysmenu=0x00080000;
-			static unsigned long int const StyleThickframe=0x00040000;
-			static unsigned long int const StyleGroup=0x00020000;
-			static unsigned long int const StyleTabstop=0x00010000;
-			static unsigned long int const StyleMinimizebox=0x00020000;
-			static unsigned long int const StyleMaximizebox=0x00010000;
-			static unsigned long int const StyleEx_dlgmodalframe=0x00000001;
-			static unsigned long int const StyleEx_noparentnotify=0x00000004;
-			static unsigned long int const StyleEx_topmost=0x00000008;
-			static unsigned long int const StyleEx_acceptfiles=0x00000010;
-			static unsigned long int const StyleEx_transparent=0x00000020;
-			static unsigned long int const StyleEx_mdichild=0x00000040;
-			static unsigned long int const StyleEx_toolwindow=0x00000080;
-			static unsigned long int const StyleEx_windowedge=0x00000100;
-			static unsigned long int const StyleEx_clientedge=0x00000200;
-			static unsigned long int const StyleEx_contexthelp=0x00000400;
-			static unsigned long int const StyleEx_right=0x00001000;
-			static unsigned long int const StyleEx_left=0x00000000;
-			static unsigned long int const StyleEx_rtlreading=0x00002000;
-			static unsigned long int const StyleEx_ltrreading=0x00000000;
-			static unsigned long int const StyleEx_leftscrollbar=0x00004000;
-			static unsigned long int const StyleEx_rightscrollbar=0x00000000;
-			static unsigned long int const StyleEx_controlparent=0x00010000;
-			static unsigned long int const StyleEx_staticedge=0x00020000;
-			static unsigned long int const StyleEx_appwindow=0x00040000;
-			static unsigned long int const StyleEx_noinheritlayout=0x00100000;
-			static unsigned long int const StyleEx_layoutrtl=0x00400000;
-			static unsigned long int const StyleEx_composited=0x02000000;
-			static unsigned long int const StyleEx_noactivate=0x08000000;
+			static const uint32_t StyleEx_dlgmodalframe=0x00000001;
+			static const uint32_t StyleEx_noparentnotify=0x00000004;
+			static const uint32_t StyleEx_topmost=0x00000008;
+			static const uint32_t StyleEx_acceptfiles=0x00000010;
+			static const uint32_t StyleEx_transparent=0x00000020;
+			static const uint32_t StyleEx_mdichild=0x00000040;
+			static const uint32_t StyleEx_toolwindow=0x00000080;
+			static const uint32_t StyleEx_windowedge=0x00000100;
+			static const uint32_t StyleEx_clientedge=0x00000200;
+			static const uint32_t StyleEx_contexthelp=0x00000400;
+			static const uint32_t StyleEx_right=0x00001000;
+			static const uint32_t StyleEx_left=0x00000000;
+			static const uint32_t StyleEx_rtlreading=0x00002000;
+			static const uint32_t StyleEx_ltrreading=0x00000000;
+			static const uint32_t StyleEx_leftscrollbar=0x00004000;
+			static const uint32_t StyleEx_rightscrollbar=0x00000000;
+			static const uint32_t StyleEx_controlparent=0x00010000;
+			static const uint32_t StyleEx_staticedge=0x00020000;
+			static const uint32_t StyleEx_appwindow=0x00040000;
+			static const uint32_t StyleEx_noinheritlayout=0x00100000;
+			static const uint32_t StyleEx_layoutrtl=0x00400000;
+			static const uint32_t StyleEx_composited=0x02000000;
+			static const uint32_t StyleEx_noactivate=0x08000000;
+			
+			static const uint32_t StyleOverlapped=0x00000000;
+			static const uint32_t StylePopup=0x80000000;
+			static const uint32_t StyleChild=0x40000000;
+			static const uint32_t StyleMinimize=0x20000000;
+			static const uint32_t StyleVisible=0x10000000;
+			static const uint32_t StyleDisabled=0x08000000;
+			static const uint32_t StyleClipsiblings=0x04000000;
+			static const uint32_t StyleClipchildren=0x02000000;
+			static const uint32_t StyleMaximize=0x01000000;
+			static const uint32_t StyleCaption=0x00c00000;
+			static const uint32_t StyleBorder=0x00800000;
+			static const uint32_t StyleDlgframe=0x00400000;
+			static const uint32_t StyleVscroll=0x00200000;
+			static const uint32_t StyleHscroll=0x00100000;
+			static const uint32_t StyleSysmenu=0x00080000;
+			static const uint32_t StyleThickframe=0x00040000;
+			static const uint32_t StyleGroup=0x00020000;
+			static const uint32_t StyleTabstop=0x00010000;
+			static const uint32_t StyleMinimizebox=0x00020000;
+			static const uint32_t StyleMaximizebox=0x00010000;
 			
 			/**Makes the window a popup window.
 			*/
@@ -143,6 +144,10 @@ namespace Gui
 			/**Sets window id.
 			*/
 			void idSet(uint32_t id_new);
+			
+			/**Retrievs the window id.
+			*/
+			uint32_t idGet() const;
 			
 			/**Enables or disables the window.
 			*/

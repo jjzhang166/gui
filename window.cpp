@@ -79,18 +79,18 @@ void Gui::Window::sizeRelative(float width,float height)
 	sizeAbsolute(wh.x,wh.y);
 	}
 
-void Gui::Window::show(unsigned int options)
+void Gui::Window::show(int options)
 	{
 	ShowWindow((HWND)handle,options);
 	}
 
-void Gui::Window::styleSet(unsigned int style,unsigned int style_ex)
+void Gui::Window::styleSet(uint32_t style_0,uint32_t style_1)
 	{
-	SetWindowLongPtr((HWND)handle,GWL_STYLE,style);
+	SetWindowLongPtr((HWND)handle,GWL_STYLE,style_1);
 	SetWindowPos((HWND)handle,HWND_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-	SetWindowLongPtr((HWND)handle,GWL_EXSTYLE,style_ex);
+	SetWindowLongPtr((HWND)handle,GWL_EXSTYLE,style_0);
 	SetWindowPos((HWND)handle,HWND_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-	if(style&WS_CHILD)
+	if(style_1&WS_CHILD)
 		{
 		HWND owner=GetWindow((HWND)handle,GW_OWNER);
 		SetParent((HWND)handle,owner);
@@ -101,7 +101,7 @@ void Gui::Window::styleSet(unsigned int style,unsigned int style_ex)
 
 void Gui::Window::popup()
 	{
-	styleSet(WS_OVERLAPPEDWINDOW,0);
+	styleSet(0,WS_OVERLAPPEDWINDOW);
 	}
 
 void Gui::Window::titleSet(const char_t* title)
@@ -111,3 +111,7 @@ void Gui::Window::titleSet(const char_t* title)
 	
 void Gui::Window::idSet(uint32_t id_new)
 	{SetWindowLongPtr((HWND)handle,GWLP_ID,(LONG_PTR)id_new);}
+
+uint32_t Gui::Window::idGet() const
+	{return GetWindowLongPtr((HWND)handle,GWLP_ID);}
+

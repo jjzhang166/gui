@@ -32,7 +32,6 @@ namespace
 				switch(event_type)
 					{
 					case Window::MessageCommand:
-						printf("%llx\n",param_0);
 						break;
 					}
 				return doDefaultAction(event_type,param_0,param_1);
