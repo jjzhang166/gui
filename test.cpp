@@ -14,11 +14,25 @@ target[
 #include "test.h"
 #include "viewsplit.h"
 #include "toolbar.h"
+#include "blitter.h"
 
 #include <cstdio>
 
 namespace
 	{
+	void fill(Herbs::MatrixStorage<Gui::Blitter::PixelBGRA<float> >& img)
+		{
+		for(size_t k=0;k<img.nRowsGet();++k)
+			{
+			for(size_t l=0;l<img.nColsGet();++l)
+				{
+				img(k,l).blue=float(l)/img.nColsGet();
+				img(k,l).green=0;
+				img(k,l).red=0;
+				}
+			}
+		}
+	
 	class Testwin:public Gui::ViewSplit
 		{
 		public:
@@ -33,18 +47,23 @@ namespace
 				
 		private:
 			Testwin(Gui::Gui& gui_obj):Gui::ViewSplit(gui_obj,0,0,nullptr)
+				,img(256,256)
 				{
 				Gui::Toolbar* tools=Gui::Toolbar::create(gui_obj,0
 					,Window::StyleChild|Window::StyleVisible,this);
 				tools->buttonAdd(STR("Hello")).buttonAdd(STR("World"));
 				firstSet(*tools);
 				
-				Gui::WindowSystem* textbox=Gui::WindowSystem::create(gui_obj
-					,STRSYS("EDIT"),0
+				Gui::Blitter* blitter=Gui::Blitter::create(gui_obj
+					,0
 					,Window::StyleBorder|Window::StyleChild|Window::StyleVisible
 					,this);
-				secondSet(*textbox);
+				secondSet(*blitter);
+				blitter->pixelsSet(img);
+				fill(img);
 				}
+			
+			Herbs::MatrixStorage<Gui::Blitter::PixelBGRA<float> > img;
 		};
 	}
 
