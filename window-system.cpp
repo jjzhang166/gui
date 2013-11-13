@@ -7,13 +7,11 @@ target[name[window-system.o] type[object]]
 #include <windows.h>
 
 namespace
-	{
-	static const charsys_t* propname=STRSYS("Gui::WindowSystem::data");
-	
+	{	
 	LRESULT CALLBACK eventCallback(HWND handle,UINT event_type
 		,WPARAM param_0,LPARAM param_1)
 		{
-		Gui::WindowSystem* window=(Gui::WindowSystem*)GetProp(handle,propname);
+		Gui::WindowSystem* window=(Gui::WindowSystem*)Gui::Window::objectGet(handle);
 
 		LRESULT ret=window->doDefaultAction(event_type,param_0,param_1);
 
@@ -29,10 +27,9 @@ namespace
 	}
 	
 Gui::WindowSystem::WindowSystem(Gui& gui_obj,const charsys_t* classname
-	,uint32_t style_0,uint32_t style_1,Window* parent):Window(gui_obj)
+	,uint32_t style_0,uint32_t style_1,Window* parent):
+	Window(gui_obj,classname,style_0,style_1,parent)
 	{
-	Window::create(classname,style_0,style_1,parent);
-	SetProp((HWND)handle,propname,this);
 	winproc_old=(Function)SetWindowLongPtr((HWND)handle,GWLP_WNDPROC,(LONG_PTR)eventCallback);
 	}
 	
@@ -44,6 +41,5 @@ size_t Gui::WindowSystem::doDefaultAction(uint32_t event_type,size_t param_0,siz
 Gui::WindowSystem::~WindowSystem()
 	{
 	SetWindowLongPtr((HWND)handle,GWLP_WNDPROC,(LONG_PTR)winproc_old); 
-	RemoveProp((HWND)handle,propname);
 	}
 

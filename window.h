@@ -16,22 +16,23 @@ target[
 #ifndef guard_Window_H
 #define guard_Window_H
 
-#include "gui.h"
 #include <vector/vector2d.h>
 #include <herbs/chartype.h>
 
 namespace Gui
 	{
+	class Gui;
+	
 	/**Base class for a Window.
 	*/
 	class Window
 		{
 		public:	
-			Window(Gui& gui_obj):m_gui(gui_obj)
-				{m_gui.windowCountInc();}
+			Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
+				,uint32_t style_1,Window* parent);
 			
-			virtual ~Window()
-				{m_gui.windowCountDec();}
+			virtual ~Window();
+				
 		
 			/**Moves the window using absolute (pixel) coordinates.
 			* \param anchor sets the coordinate of the window used for positioning.
@@ -57,6 +58,10 @@ namespace Gui
 			/**Sets the window size relative to its parent.
 			*/
 			void sizeRelative(float width, float height);
+			
+			Vector::Vector2d<int> sizeClientGet() const;
+			
+			Vector::Vector2d<int> sizeWindowGet() const;
 			
 			/**Shows the window.
 			*/
@@ -385,13 +390,14 @@ namespace Gui
 			static unsigned int const MessageTouchup=578;
 			
 	
-		protected:
-			/**Creates a Window
+			/**Returns the a pointer to the corresponding Window given a system
+			* handle win.
 			*/
-			void create(const charsys_t* classname,uint32_t style_0
-				,uint32_t style_1,Window* parent);
+			static Window* objectGet(void* win);
+	
+		protected:
 				
-			/**Returns a system handle to the Window given by win.
+			/**Returns the system handle to the Window given by win.
 			*/
 			static void* handleGet(Window* win);
 			

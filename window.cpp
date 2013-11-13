@@ -9,6 +9,11 @@ target[name[window.o] type[object]]
 #include <herbs/stringsys.h>
 #include <windows.h>
 
+namespace
+	{
+	static const charsys_t* propname=STRSYS("Gui::Window::data");
+	}
+
 void* Gui::Window::handleGet(Window* win)
 	{
 	if(win==nullptr)
@@ -16,8 +21,13 @@ void* Gui::Window::handleGet(Window* win)
 	return win->handle;
 	}
 
-void Gui::Window::create(const charsys_t* classname,uint32_t style_0
-	,uint32_t style_1,Window* parent)
+Gui::Window* Gui::Window::objectGet(void* handle)
+	{
+	return (Window*)GetProp((HWND)handle,propname);
+	}
+
+Gui::Window::Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
+	,uint32_t style_1,Window* parent):m_gui(gui_obj)
 	{
 	HWND handle_parent=(HWND)handleGet(parent);
 
@@ -28,6 +38,14 @@ void Gui::Window::create(const charsys_t* classname,uint32_t style_0
 		{
 		throw Herbs::ExceptionMissing(___FILE__,__LINE__);
 		}
+	m_gui.windowCountInc();
+	SetProp((HWND)handle,propname,this);
+	}
+
+Gui::Window::~Window()
+	{
+	RemoveProp((HWND)handle,propname);
+	m_gui.windowCountDec();
 	}
 	
 size_t Gui::Window::doDefaultAction(uint32_t event_type,size_t param_0,size_t param_1)
@@ -77,6 +95,20 @@ void Gui::Window::sizeRelative(float width,float height)
 	Vector::Vector2d<float> wh(float(winrect.right-winrect.left),float(winrect.bottom-winrect.top));
 	wh=Vector::productHadamard(wh,Vector::Vector2d<float>(width,height));
 	sizeAbsolute(wh.x,wh.y);
+	}
+
+Vector::Vector2d<int> Gui::Window::sizeClientGet() const
+	{
+	RECT winrect;
+	GetClientRect((HWND)handle,&winrect);
+	return Vector::Vector2d<int>(winrect.right-winrect.left,winrect.bottom-winrect.top);
+	}
+	
+Vector::Vector2d<int> Gui::Window::sizeWindowGet() const
+	{
+	RECT winrect;
+	GetWindowRect((HWND)handle,&winrect);
+	return Vector::Vector2d<int>(winrect.right-winrect.left,winrect.bottom-winrect.top);
 	}
 
 void Gui::Window::show(int options)

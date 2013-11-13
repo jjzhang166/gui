@@ -9,19 +9,34 @@ target[name[window-custom.o] type[object]]
 namespace
 	{
 	static const charsys_t* classname=STRSYS("Gui::WindowCustom::baseclassname");
-	static const charsys_t* propname=STRSYS("Gui::WindowCustom::data");
 	
 	LRESULT CALLBACK eventCallback(HWND handle,UINT event_type
 		,WPARAM param_0,LPARAM param_1)
 		{
-		Gui::WindowCustom* obj=(Gui::WindowCustom*)GetProp(handle,propname);
+		Gui::WindowCustom* obj=(Gui::WindowCustom*)Gui::Window::objectGet(handle);
 		if(obj==nullptr)
 			{return DefWindowProc(handle,event_type,param_0,param_1);}
 		switch(event_type)
 			{
+			case WM_COMMAND:
+				{
+				if(param_1!=0)
+					{
+					Gui::Window* source=Gui::Window::objectGet((HWND)param_1);
+					if(source!=nullptr)
+						{
+						obj->onCommand(HIWORD(param_0),LOWORD(param_0),*source);
+						return DefWindowProc(handle,event_type,param_0,param_1);
+						}
+					}
+				return obj->onEvent(event_type,param_0,param_1);
+				}
+				break;
+				
 			case WM_DESTROY:
 				delete obj;
 				break;
+				
 			default:
 				return obj->onEvent(event_type,param_0,param_1);
 			}
@@ -48,13 +63,11 @@ void Gui::WindowCustom::init()
 	}
 
 Gui::WindowCustom::WindowCustom(Gui& gui_obj,uint32_t style_0,uint32_t style_1
-	,Window* parent):Window(gui_obj)
+	,Window* parent):Window(gui_obj,classname,style_0,style_1,parent)
 	{
-	create(classname,style_0,style_1,parent);
-	SetProp((HWND)handle,propname,this);
+	
 	}
 
 Gui::WindowCustom::~WindowCustom()
 	{
-	RemoveProp((HWND)handle,propname);
 	}

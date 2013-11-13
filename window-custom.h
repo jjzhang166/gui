@@ -24,7 +24,7 @@ namespace Gui
 				
 			/**This method is called when a user issues a command
 			*/
-			virtual void onCommand(uint32_t command_id,Window* source)
+			virtual void onCommand(uint32_t event_status,uint32_t command_id,Window& source)
 				{}
 			
 			virtual ~WindowCustom();
