@@ -12,13 +12,7 @@ target[
 
 
 #include "Gui.h"
-#include "window-custom.h"
 #include <windows.h>
-
-void Gui::Gui::init()
-	{
-	WindowCustom::init();
-	}
 
 int Gui::Gui::run()
 	{
@@ -31,9 +25,9 @@ int Gui::Gui::run()
 			DispatchMessage(&message);
 			}
 		else
-			{break;}
+			{return message.wParam;}
 		}
-	return message.wParam;
+	return 0;
 	}
 
 Gui::Gui::~Gui()

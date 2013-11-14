@@ -28,12 +28,6 @@ namespace Gui
 		public:
 			Gui():window_count(0){}
 			
-			/**Prepares the GUI and initiates impl.
-			*
-			* On Windows it registers a window class. It also initiates comctl.
-			*/
-			void init();
-			
 			/**Runs the message loop as long as there are Window objects 
 			* associated with current thread.
 			*/

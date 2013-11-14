@@ -69,7 +69,7 @@ namespace
 
 void Gui::Test::init(Herbs::Directory&& dir)
 	{
-	Gui::init();
+	WindowCustom::init();
 	Toolbar::init();
 	mainwin=Testwin::create(*this);
 	mainwin->popup();
