@@ -143,7 +143,7 @@ void Gui::Window::popup()
 
 void Gui::Window::titleSet(const char_t* title)
 	{
-	SetWindowText((HWND)handle,Herbs::stringsys(title));
+	SetWindowText((HWND)handle,Herbs::bufferSysPtr(Herbs::stringsys(title)));
 	}
 	
 void Gui::Window::idSet(uint32_t id_new)

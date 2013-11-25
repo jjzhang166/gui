@@ -4,6 +4,7 @@ target[name[toolbar.o] type[object] dependencies[comctl32]]
 
 #include "toolbar.h"
 
+#define _WIN32_IE 0x5500
 #include <windows.h>
 #include <commctrl.h>
 

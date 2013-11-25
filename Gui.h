@@ -17,6 +17,7 @@ target[
 #define guard_Gui_H
 
 #include <herbs/application.h>
+#include <cstddef>
 
 namespace Gui
 	{

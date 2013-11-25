@@ -18,6 +18,7 @@ target[
 
 #include <vector/vector2d.h>
 #include <herbs/chartype.h>
+#include <cstddef>
 
 namespace Gui
 	{
