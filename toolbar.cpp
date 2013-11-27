@@ -38,3 +38,20 @@ Gui::Toolbar& Gui::Toolbar::buttonAdd(const char_t* text)
 	++n_buttons;
 	return *this;
 	}
+	
+Gui::Toolbar& Gui::Toolbar::toggleAdd(const char_t* text)
+	{
+	TBBUTTON button;
+	Herbs::BufferSys text_out=Herbs::stringsys(text);
+	button.iBitmap=I_IMAGENONE;
+	button.idCommand=n_buttons;
+	button.fsState=TBSTATE_ENABLED;
+	button.fsStyle=TBSTYLE_BUTTON|BTNS_AUTOSIZE|BTNS_CHECK;
+	button.dwData=(DWORD_PTR)this;
+	button.iString=(INT_PTR)( (charsys_t*)bufferSysPtr(text_out) );
+	SendMessage((HWND)handle,TB_BUTTONSTRUCTSIZE,sizeof(TBBUTTON),0);
+	SendMessage((HWND)handle,TB_ADDBUTTONS,1,(LPARAM)&button);
+	SendMessage((HWND)handle,TB_AUTOSIZE,0,0);
+	++n_buttons;
+	return *this;
+	}

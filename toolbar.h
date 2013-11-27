@@ -17,6 +17,8 @@ namespace Gui
 			
 			Toolbar& buttonAdd(const char_t* text);
 			
+			Toolbar& toggleAdd(const char_t* text);
+			
 			static Toolbar* create(Gui& gui_obj
 				,uint32_t style_0,uint32_t style_1,Window* parent)
 				{return new Toolbar(gui_obj,style_0,style_1,parent);}
