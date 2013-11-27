@@ -31,7 +31,7 @@ Gui::Toolbar& Gui::Toolbar::buttonAdd(const char_t* text)
 	button.fsState=TBSTATE_ENABLED;
 	button.fsStyle=TBSTYLE_BUTTON|BTNS_AUTOSIZE;
 	button.dwData=(DWORD_PTR)this;
-	button.iString=(INT_PTR)( (charsys_t*)bufferSysPtr(text_out) );
+	button.iString=(INT_PTR)( (charsys_t*)Herbs::bufferSysPtr(text_out) );
 	SendMessage((HWND)handle,TB_BUTTONSTRUCTSIZE,sizeof(TBBUTTON),0);
 	SendMessage((HWND)handle,TB_ADDBUTTONS,1,(LPARAM)&button);
 	SendMessage((HWND)handle,TB_AUTOSIZE,0,0);
@@ -48,7 +48,7 @@ Gui::Toolbar& Gui::Toolbar::toggleAdd(const char_t* text)
 	button.fsState=TBSTATE_ENABLED;
 	button.fsStyle=TBSTYLE_BUTTON|BTNS_AUTOSIZE|BTNS_CHECK;
 	button.dwData=(DWORD_PTR)this;
-	button.iString=(INT_PTR)( (charsys_t*)bufferSysPtr(text_out) );
+	button.iString=(INT_PTR)( (charsys_t*)Herbs::bufferSysPtr(text_out) );
 	SendMessage((HWND)handle,TB_BUTTONSTRUCTSIZE,sizeof(TBBUTTON),0);
 	SendMessage((HWND)handle,TB_ADDBUTTONS,1,(LPARAM)&button);
 	SendMessage((HWND)handle,TB_AUTOSIZE,0,0);
