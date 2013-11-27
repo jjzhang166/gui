@@ -41,6 +41,7 @@ namespace Gui
 			Herbs::MatrixStorage<PixelBGRA<uint8_t> > image_out;
 			void bitmapCopy();
 			void* dc_out;
+			void* thread_lock;
 		};
 	}
 	
