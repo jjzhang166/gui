@@ -1,0 +1,17 @@
+config_set
+	[
+	components
+		[
+		Wand
+			[
+			paths
+				[
+				sources[.]
+				]
+			herbarium
+				[
+				name[gui]
+				]
+			]
+		]
+	]
