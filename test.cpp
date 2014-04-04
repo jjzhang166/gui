@@ -20,7 +20,7 @@ target[
 
 namespace
 	{
-	void fill(Herbs::MatrixStorage<Gui::Blitter::PixelBGRA<float> >& img)
+	void fill(Vector::MatrixStorage<Gui::Blitter::PixelBGRA<float> >& img)
 		{
 		for(size_t k=0;k<img.nRowsGet();++k)
 			{
@@ -63,7 +63,7 @@ namespace
 				fill(img);
 				}
 			
-			Herbs::MatrixStorage<Gui::Blitter::PixelBGRA<float> > img;
+			Vector::MatrixStorage<Gui::Blitter::PixelBGRA<float> > img;
 		};
 	}
 

@@ -1,12 +1,12 @@
 #ifdef __WAND__
-target[name[window.o] type[object]]
+target[name[window.o] type[object] platform[;Windows]]
 #endif
 
 #include "window.h"
 #include "gui.h"
 
-#include <herbs/exceptionmissing.h>
-#include <herbs/stringsys.h>
+#include <herbs/exceptionmissing/exceptionmissing.h>
+#include <herbs/stringsys/stringsys.h>
 #include <windows.h>
 
 namespace

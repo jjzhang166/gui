@@ -1,5 +1,5 @@
 #ifdef __WAND__
-target[name[toolbar.o] type[object] dependencies[comctl32]]
+target[name[toolbar.o] type[object] dependency[comctl32;external] platform[;Windows]]
 #endif
 
 #include "toolbar.h"
@@ -7,7 +7,7 @@ target[name[toolbar.o] type[object] dependencies[comctl32]]
 #define _WIN32_IE 0x5500
 #include <windows.h>
 #include <commctrl.h>
-#include <herbs/stringsys.h>
+#include <herbs/stringsys/stringsys.h>
 
 void Gui::Toolbar::init()
 	{

@@ -1,5 +1,5 @@
 #ifdef __WAND__
-dependencies[viewsplit.o]
+dependency[viewsplit.o]
 target[name[viewsplit.h] type[include]]
 #endif
 

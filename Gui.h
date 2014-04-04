@@ -1,11 +1,11 @@
 #ifdef __WAND__
 
-dependencies[
-	Gui.o
+dependency[
+	gui.o
 ]
 target[
 	name[
-		Gui.h
+		gui.h
 	]
 	type[
 		include
@@ -16,7 +16,7 @@ target[
 #ifndef guard_Gui_H
 #define guard_Gui_H
 
-#include <herbs/application.h>
+#include <herbs/application/application.h>
 #include <cstddef>
 
 namespace Gui

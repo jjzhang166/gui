@@ -1,6 +1,6 @@
 #ifdef __WAND__
 
-dependencies[
+dependency[
 	window.o
 ]
 target[
@@ -17,7 +17,7 @@ target[
 #define guard_Window_H
 
 #include <vector/vector2d.h>
-#include <herbs/chartype.h>
+#include <herbs/chartype/chartype.h>
 #include <cstddef>
 
 namespace Gui

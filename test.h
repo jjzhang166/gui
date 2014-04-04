@@ -1,6 +1,6 @@
 #ifdef __WAND__
 
-dependencies[
+dependency[
 	test.o
 ]
 target[

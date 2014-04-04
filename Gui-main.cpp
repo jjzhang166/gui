@@ -2,13 +2,13 @@
 
 target[
 	name[
-		Gui.exe
+		gui.exe
 	]
 	type[
 		application
 	]
 	platform[
-		win32
+		;win32
 	]
 ]
 #endif
@@ -16,7 +16,7 @@ target[
 
 target[
 	name[
-		Gui
+		gui
 	]
 	type[
 		application
@@ -27,7 +27,7 @@ target[
 
 #include "test.h"
 
-#include <herbs/maindefault.h>
+#include <herbs/maindefault/maindefault.h>
 
 Herbs::Application* Herbs::Application::instanceCreate()
 	{

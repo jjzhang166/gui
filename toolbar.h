@@ -1,5 +1,5 @@
 #ifdef __WAND__
-dependencies[toolbar.o]
+dependency[toolbar.o]
 target[name[toolbar.h] type[include]]
 #endif
 

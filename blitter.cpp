@@ -1,5 +1,5 @@
 #ifdef __WAND__
-target[name[blitter.o] type[object] dependencies[gdi32]]
+target[name[blitter.o] type[object] dependency[gdi32;external] platform[;Windows]]
 #endif
 
 #include "blitter.h"
@@ -9,7 +9,7 @@ namespace
 	{
 	void draw(
 		 HDC dc_out
-		,const Herbs::MatrixStorage<Gui::Blitter::PixelBGRA<uint8_t> >& image_out
+		,const Vector::MatrixStorage<Gui::Blitter::PixelBGRA<uint8_t> >& image_out
 		)
 		{
 		BITMAPINFO info;
@@ -59,7 +59,7 @@ size_t Gui::Blitter::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	return doDefaultAction(event_type,param_0,param_1);
 	}
 	
-void Gui::Blitter::pixelsSet(const Herbs::MatrixStorage<PixelBGRA<float> >& bitmap)
+void Gui::Blitter::pixelsSet(const Vector::MatrixStorage<PixelBGRA<float> >& bitmap)
 	{
 	image_in=&bitmap;
 	bitmapCopy();

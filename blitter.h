@@ -1,5 +1,5 @@
 #ifdef __WAND__
-dependencies[blitter.o]
+dependency[blitter.o]
 target[name[blitter.h] type[include]]
 #endif
 
@@ -7,7 +7,7 @@ target[name[blitter.h] type[include]]
 #define BLITTER_H
 
 #include "window-custom.h"
-#include <herbs/matrixstorage.h>
+#include <vector/matrixstorage.h>
 
 namespace Gui
 	{
@@ -30,15 +30,15 @@ namespace Gui
 			static Blitter* create(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent)
 				{return new Blitter(gui_obj,style_0,style_1,parent);}
 			
-			void pixelsSet(const Herbs::MatrixStorage<PixelBGRA<float> >& bitmap);
+			void pixelsSet(const Vector::MatrixStorage<PixelBGRA<float> >& bitmap);
 			
 		protected:
 			Blitter(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);
 			~Blitter();
 		
 		private:
-			const Herbs::MatrixStorage<PixelBGRA<float> >* image_in;
-			Herbs::MatrixStorage<PixelBGRA<uint8_t> > image_out;
+			const Vector::MatrixStorage<PixelBGRA<float> >* image_in;
+			Vector::MatrixStorage<PixelBGRA<uint8_t> > image_out;
 			void bitmapCopy();
 			void* dc_out;
 			void* thread_lock;

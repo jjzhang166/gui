@@ -1,9 +1,9 @@
 #ifdef __WAND__
-target[name[window-custom.o] type[object]]
+target[name[window-custom.o] type[object] platform[;Windows]]
 #endif
 
 #include "window-custom.h"
-#include <herbs/exceptionmissing.h>
+#include <herbs/exceptionmissing/exceptionmissing.h>
 #include <windows.h>
 
 namespace

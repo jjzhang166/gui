@@ -1,5 +1,5 @@
 #ifdef __WAND__
-dependencies[window-custom.o]
+dependency[window-custom.o]
 target[name[window-custom.h] type[include]]
 #endif
 

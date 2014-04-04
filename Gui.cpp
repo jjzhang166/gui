@@ -2,16 +2,17 @@
 
 target[
 	name[
-		Gui.o
+		gui.o
 	]
 	type[
 		object
 	]
+	platform[;Windows]
 ]
 #endif
 
 
-#include "Gui.h"
+#include "gui.h"
 #include <windows.h>
 
 int Gui::Gui::run()
