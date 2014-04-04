@@ -8,7 +8,7 @@ target[
 		application
 	]
 	platform[
-		;win32
+		;Windows
 	]
 ]
 #endif
