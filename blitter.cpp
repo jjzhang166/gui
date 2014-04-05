@@ -56,7 +56,7 @@ size_t Gui::Blitter::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			}
 			break;
 		}
-	return doDefaultAction(event_type,param_0,param_1);
+	return WindowCustom::onEvent(event_type,param_0,param_1);
 	}
 	
 void Gui::Blitter::pixelsSet(const Vector::MatrixStorage<PixelBGRA<float> >& bitmap)

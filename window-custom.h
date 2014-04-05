@@ -19,8 +19,7 @@ namespace Gui
 			
 			/**This method is called when an GUI event occurs.
 			*/
-			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)
-				{return doDefaultAction(event_type,param_0,param_1);}
+			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1);
 				
 			/**This method is called when a user issues a command.
 			*/

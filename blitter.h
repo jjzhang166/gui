@@ -25,7 +25,7 @@ namespace Gui
 				T alpha;
 				};
 				
-			size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1);
+			size_t virtual onEvent(uint32_t event_type,size_t param_0,size_t param_1);
 				
 			static Blitter* create(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent)
 				{return new Blitter(gui_obj,style_0,style_1,parent);}

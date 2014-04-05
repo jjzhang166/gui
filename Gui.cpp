@@ -18,6 +18,11 @@ target[
 int Gui::Gui::run()
 	{
 	MSG message;
+/*	TODO: load all fonts from the NONCLIENTMETRICS object
+	NONCLIENTMETRICS ncm;
+	ncm.cbSize=sizeof(ncm);
+	SystemParametersInfo(SPI_GETNONCLIENTMETRICS,0,&ncm,0);
+*/
 	while(window_count)
 		{
 		if(GetMessage(&message, NULL, 0, 0) > 0)

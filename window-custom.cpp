@@ -71,3 +71,6 @@ Gui::WindowCustom::WindowCustom(Gui& gui_obj,uint32_t style_0,uint32_t style_1
 Gui::WindowCustom::~WindowCustom()
 	{
 	}
+
+size_t Gui::WindowCustom::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
+	{return DefWindowProc((HWND)handle,event_type,param_0,param_1);}

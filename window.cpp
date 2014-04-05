@@ -47,11 +47,6 @@ Gui::Window::~Window()
 	RemoveProp((HWND)handle,propname);
 	m_gui.windowCountDec();
 	}
-	
-size_t Gui::Window::doDefaultAction(uint32_t event_type,size_t param_0,size_t param_1)
-	{
-	return DefWindowProc((HWND)handle,event_type,param_0,param_1);
-	}
 
 void Gui::Window::moveAbsolute(Vector::Vector2d<float> anchor
 	,Vector::Vector2d<float> position)

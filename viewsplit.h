@@ -15,7 +15,7 @@ namespace Gui
 	class ViewSplit:public WindowCustom
 		{
 		public:
-			size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1);
+			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1);
 			void firstSet(Window& window)
 				{first=&window;}
 			

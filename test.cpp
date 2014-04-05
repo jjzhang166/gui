@@ -14,24 +14,32 @@ target[
 #include "test.h"
 #include "viewsplit.h"
 #include "toolbar.h"
-#include "blitter.h"
+#include "fader.h"
 
 #include <cstdio>
 
 namespace
 	{
-	void fill(Vector::MatrixStorage<Gui::Blitter::PixelBGRA<float> >& img)
+	class To_dB:public Gui::Fader::Fadefunc
 		{
-		for(size_t k=0;k<img.nRowsGet();++k)
-			{
-			for(size_t l=0;l<img.nColsGet();++l)
+		public:
+			To_dB():min_dB(-145),max_dB(6)
+				{}
+		
+			double y(double x)
 				{
-				img(k,l).blue=float(l)/img.nColsGet();
-				img(k,l).green=0;
-				img(k,l).red=0;
+				return min_dB*(1.0-x) + x*max_dB;
 				}
-			}
-		}
+			
+			double x(double y)
+				{
+				return (y-min_dB)/(max_dB-min_dB);
+				}
+		private:
+			double min_dB;
+			double max_dB;
+		};
+		
 	
 	class Testwin:public Gui::ViewSplit
 		{
@@ -47,23 +55,20 @@ namespace
 				
 		private:
 			Testwin(Gui::Gui& gui_obj):Gui::ViewSplit(gui_obj,0,0,nullptr)
-				,img(256,256)
 				{
 				Gui::Toolbar* tools=Gui::Toolbar::create(gui_obj,0
 					,Window::StyleChild|Window::StyleVisible,this);
 				tools->buttonAdd(STR("Hello")).buttonAdd(STR("World"));
 				firstSet(*tools);
 				
-				Gui::Blitter* blitter=Gui::Blitter::create(gui_obj
+				Gui::Fader* fader=Gui::Fader::create(gui_obj
 					,0
 					,Window::StyleBorder|Window::StyleChild|Window::StyleVisible
-					,this);
-				secondSet(*blitter);
-				blitter->pixelsSet(img);
-				fill(img);
+					,this,to_dB);
+				secondSet(*fader);
 				}
-			
-			Vector::MatrixStorage<Gui::Blitter::PixelBGRA<float> > img;
+				
+			To_dB to_dB;
 		};
 	}
 
@@ -77,6 +82,7 @@ void Gui::Test::init(Herbs::Directory&& dir)
 	mainwin->titleSet(STR("Gui test"));
 	mainwin->moveRelative(Vector::Vector2d<float>(0,0)
 		,Vector::Vector2d<float>(0.5,0.5));
+
 	mainwin->show(Window::DisplayNormal);
 	}
 

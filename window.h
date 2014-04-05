@@ -161,9 +161,9 @@ namespace Gui
 			*/
 			void enable(bool status);
 			
-			/**Performs default action to event_type.
+			/**This method is called when an GUI event occurs.
 			*/
-			virtual size_t doDefaultAction(uint32_t event_type,size_t param_0,size_t param_1);
+			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)=0;
 				
 		///*Messages
 			static unsigned int const MessageNull=0x0000;

@@ -13,7 +13,7 @@ namespace
 		{
 		Gui::WindowSystem* window=(Gui::WindowSystem*)Gui::Window::objectGet(handle);
 
-		LRESULT ret=window->doDefaultAction(event_type,param_0,param_1);
+		LRESULT ret=window->onEvent(event_type,param_0,param_1);
 
 		switch(event_type)
 			{
@@ -33,7 +33,7 @@ Gui::WindowSystem::WindowSystem(Gui& gui_obj,const charsys_t* classname
 	winproc_old=(Function)SetWindowLongPtr((HWND)handle,GWLP_WNDPROC,(LONG_PTR)eventCallback);
 	}
 	
-size_t Gui::WindowSystem::doDefaultAction(uint32_t event_type,size_t param_0,size_t param_1)
+size_t Gui::WindowSystem::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	{
 	return CallWindowProc((WNDPROC)winproc_old,(HWND)handle,event_type,param_0,param_1);
 	}
