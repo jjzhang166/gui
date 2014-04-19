@@ -4,6 +4,7 @@ target[name[window.o] type[object] platform[;Windows]]
 
 #include "window.h"
 #include "gui.h"
+#include "font.h"
 
 #include <herbs/exceptionmissing/exceptionmissing.h>
 #include <herbs/stringsys/stringsys.h>
