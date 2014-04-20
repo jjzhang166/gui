@@ -25,21 +25,34 @@ Gui::Fader::Fader(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent
 	WindowSystem(gui_obj,TRACKBAR_CLASS,style_0,style_1|TBS_NOTICKS|TBS_BOTH,parent)
 	,m_f(f)
 	{
-	SendMessage((HWND)handle,TBM_SETRANGEMIN, 0,0);
-	SendMessage((HWND)handle,TBM_SETRANGEMAX,1,0x7fff);
 	valueSet(0);
 	}
 
 double Gui::Fader::valueGet() const
 	{
-	int v=SendMessage((HWND)handle,TBM_GETPOS,0,0);
-	return m_f.y(double(v)/0x7fff);
+	uint32_t v=SendMessage((HWND)handle,TBM_GETPOS,0,0);
+	uint32_t min=SendMessage((HWND)handle,TBM_GETRANGEMIN,0,0);
+	uint32_t max=SendMessage((HWND)handle,TBM_GETRANGEMAX,0,0);
+	
+	return m_f.valueGet(v,min,max);
 	}
 
 void Gui::Fader::valueSet(double y)
 	{
-	double x=m_f.x(y);
-	SendMessage((HWND)handle,TBM_SETPOS,1,(LPARAM)(x*0x7fff + 0.5));
+	uint32_t min=SendMessage((HWND)handle,TBM_GETRANGEMIN,0,0);
+	uint32_t max=SendMessage((HWND)handle,TBM_GETRANGEMAX,0,0);
+	uint32_t v=m_f.positionGet(y,max,min);
+	SendMessage((HWND)handle,TBM_SETPOS,1,(LPARAM)v);
+	}
+
+void Gui::Fader::minSet(uint32_t x)
+	{
+	SendMessage((HWND)handle,TBM_SETRANGEMIN, 0,x);
+	}
+
+void Gui::Fader::maxSet(uint32_t x)
+	{
+	SendMessage((HWND)handle,TBM_SETRANGEMAX, 0,x);
 	}
 	
 size_t Gui::Fader::onEvent(uint32_t event_type,size_t param_0,size_t param_1)

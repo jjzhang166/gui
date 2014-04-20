@@ -16,8 +16,11 @@ namespace Gui
 			class Fadefunc
 				{
 				public:
-					virtual double y(double x)=0;
-					virtual double x(double y)=0;
+					virtual double valueGet(uint32_t pos,uint32_t min
+						,uint32_t max)=0;
+						
+					virtual uint32_t positionGet(double fader_val
+						,uint32_t min,uint32_t max)=0;
 				};
 		
 			static void init();
@@ -32,6 +35,9 @@ namespace Gui
 				{return new Fader(gui_obj,style_0,style_1,parent,f);}
 			
 			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1);
+			
+			void minSet(uint32_t x);
+			void maxSet(uint32_t x);
 		
 		protected:
 			Fader(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent

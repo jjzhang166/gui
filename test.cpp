@@ -26,15 +26,18 @@ namespace
 			To_dB():min_dB(-145),max_dB(6)
 				{}
 		
-			double y(double x)
+			double valueGet(uint32_t pos,uint32_t min,uint32_t max)
 				{
+				double x=double(pos - min)/double(max - min);
 				return min_dB*(1.0-x) + x*max_dB;
 				}
 			
-			double x(double y)
+			uint32_t positionGet(double value,uint32_t min,uint32_t max)
 				{
-				return (y-min_dB)/(max_dB-min_dB);
+				double x=(value-min_dB)/(max_dB-min_dB);
+				return uint32_t( x*max + (1-x)*min );
 				}
+		
 		private:
 			double min_dB;
 			double max_dB;
