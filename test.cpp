@@ -15,6 +15,7 @@ target[
 #include "viewsplit.h"
 #include "toolbar.h"
 #include "fader.h"
+#include "font.h"
 
 #include <cstdio>
 
@@ -35,7 +36,7 @@ namespace
 			uint32_t positionGet(double value,uint32_t min,uint32_t max)
 				{
 				double x=(value-min_dB)/(max_dB-min_dB);
-				return uint32_t( x*max + (1-x)*min );
+				return uint32_t( x*max + (1-x)*min + 00.5);
 				}
 		
 		private:
@@ -58,6 +59,7 @@ namespace
 				
 		private:
 			Testwin(Gui::Gui& gui_obj):Gui::ViewSplit(gui_obj,0,0,nullptr)
+				,font_label(Gui::Font::fromThemeGet(Gui::Font::Element::WIDGET))
 				{
 				Gui::Toolbar* tools=Gui::Toolbar::create(gui_obj,0
 					,Window::StyleChild|Window::StyleVisible,this);
@@ -68,10 +70,16 @@ namespace
 					,0
 					,Window::StyleBorder|Window::StyleChild|Window::StyleVisible
 					,this,to_dB);
+				
+				fader->fontChangeRequest(font_label);
+				fader->maxSet(0x7fff);
+				fader->minSet(0);
+				
 				secondSet(*fader);
 				}
 				
 			To_dB to_dB;
+			Gui::Font font_label;
 		};
 	}
 

@@ -3,6 +3,7 @@ target[name[window-system.o] type[object] platform[;Windows]]
 #endif
 
 #include "window-system.h"
+#include "font.h"
 #include <herbs/exceptionmissing/exceptionmissing.h>
 #include <windows.h>
 
@@ -12,12 +13,12 @@ namespace
 		,WPARAM param_0,LPARAM param_1)
 		{
 		Gui::WindowSystem* window=(Gui::WindowSystem*)Gui::Window::objectGet(handle);
-
+		
 		LRESULT ret=window->onEvent(event_type,param_0,param_1);
 
 		switch(event_type)
 			{
-			case WM_DESTROY:
+			case Gui::Window::MessageDestroy:
 				delete window;
 				break;
 			}
@@ -41,5 +42,10 @@ size_t Gui::WindowSystem::onEvent(uint32_t event_type,size_t param_0,size_t para
 Gui::WindowSystem::~WindowSystem()
 	{
 	SetWindowLongPtr((HWND)handle,GWLP_WNDPROC,(LONG_PTR)winproc_old); 
+	}
+	
+void Gui::WindowSystem::fontChangeRequest(const Font& font)
+	{
+	SendMessage((HWND)handle,MessageSetfont,(WPARAM)font.handle,1);
 	}
 

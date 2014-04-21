@@ -34,4 +34,5 @@ Gui::Font Gui::Font::fromThemeGet(Element e)
 		case Element::TOOLTIP:
 			return Font(CreateFontIndirect(&ncm.lfStatusFont));
 		}
+	abort();
 	}

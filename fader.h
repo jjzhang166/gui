@@ -44,6 +44,9 @@ namespace Gui
 				,Fadefunc& f);
 		private:
 			Fadefunc& m_f;
+			void* font_sys_current;
+			float font_height;
+			float font_width;
 		};
 	};
 	
