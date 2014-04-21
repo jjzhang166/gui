@@ -89,10 +89,9 @@ size_t Gui::Fader::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			ReleaseDC((HWND)handle,dc);
 			}
 			break;
-	
-		case MessageSetfont:
+			
+		case MessageSize:
 			{
-			font_sys_current=(void*)(param_0);
 			HDC dc=GetDC((HWND)handle);
 			
 			GLYPHMETRICS m;
@@ -102,6 +101,17 @@ size_t Gui::Fader::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			ReleaseDC((HWND)handle,dc);
 			font_height=2.0f*m.gmBlackBoxY;
 			font_width=1.5f*m.gmBlackBoxX;
+			RECT knob;
+			
+			SendMessage((HWND)handle,TBM_GETTHUMBRECT,0,(LPARAM)(&knob));
+			auto size=sizeWindowGet();
+			sizeAbsolute(size.x,font_height+knob.bottom);
+			}
+			break;
+	
+		case MessageSetfont:
+			{
+			font_sys_current=(void*)(param_0);
 			}
 			break;
 		}

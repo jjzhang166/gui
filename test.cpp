@@ -64,7 +64,7 @@ namespace
 				Gui::Toolbar* tools=Gui::Toolbar::create(gui_obj,0
 					,Window::StyleChild|Window::StyleVisible,this);
 				tools->buttonAdd(STR("Hello")).buttonAdd(STR("World"));
-				firstSet(*tools);
+				
 				
 				Gui::Fader* fader=Gui::Fader::create(gui_obj
 					,0
@@ -75,7 +75,8 @@ namespace
 				fader->maxSet(0x7fff);
 				fader->minSet(0);
 				
-				secondSet(*fader);
+				secondSet(*tools);
+				firstSet(*fader);
 				}
 				
 			To_dB to_dB;
