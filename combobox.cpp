@@ -33,7 +33,7 @@ namespace
 
 Gui::Combobox::Combobox(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent):
 	WindowSystem(gui_obj,STR("COMBOBOX"),style_0
-		,style_1|CBS_HASSTRINGS|CBS_DROPDOWNLIST|CBS_SIMPLE
+		,style_1|CBS_HASSTRINGS|CBS_DROPDOWNLIST|CBS_SIMPLE|WS_VSCROLL
 		,parent)
 	{
 	}
@@ -68,7 +68,7 @@ size_t Gui::Combobox::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 		case MessageSize:
 			{
 			auto size=sizeWindowGet();
-			sizeAbsolute(std::max(size.x,size_min.x),std::max(size.y,size_min.y));
+			sizeAbsolute(std::max(size.x,size_min.x),std::max(size.y,8*size_min.y));
 			}
 			break;
 		case SIZE_UPDATE:
