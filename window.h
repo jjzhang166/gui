@@ -167,7 +167,9 @@ namespace Gui
 			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)=0;
 			
 			virtual void fontChangeRequest(const Font& font){}
-				
+
+			virtual void valueUpdate(){}
+			
 		///*Messages
 			static unsigned int const MessageNull=0x0000;
 			static unsigned int const MessageCreate=0x0001;

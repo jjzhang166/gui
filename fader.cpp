@@ -10,8 +10,6 @@ target[name[fader.o] type[object] dependency[comctl32;external] dependency[gdi32
 #include <herbs/stringsys/stringsys.h>
 #include <herbs/floatformat/floatformat.h>
 
-#include <cstdio>
-
 void Gui::Fader::init()
 	{
 	INITCOMMONCONTROLSEX a;
@@ -20,45 +18,30 @@ void Gui::Fader::init()
 	InitCommonControlsEx(&a);
 	}
 
-Gui::Fader::Fader(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent
-	,Fadefunc& f):
+Gui::Fader::Fader(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent):
 	WindowSystem(gui_obj,TRACKBAR_CLASS,style_0,style_1|TBS_NOTICKS|TBS_BOTH,parent)
-	,m_f(f)
 	{
 	font_sys_current=GetStockObject(DEFAULT_GUI_FONT);
-	minSet(0);
-	maxSet(127);
-	valueSet(0);
 	}
 
 double Gui::Fader::valueGet() const
 	{
-	uint32_t v=SendMessage((HWND)handle,TBM_GETPOS,0,0);
-	uint32_t min=SendMessage((HWND)handle,TBM_GETRANGEMIN,0,0);
-	uint32_t max=SendMessage((HWND)handle,TBM_GETRANGEMAX,0,0);
-	
-	return m_f.valueGet(v,min,max);
+	pos_t v=SendMessage((HWND)handle,TBM_GETPOS,0,0);
+	pos_t max=SendMessage((HWND)handle,TBM_GETRANGEMAX,0,0);
+	return positionSet(v,max);
 	}
 
 void Gui::Fader::valueSet(double y)
 	{
-	uint32_t min=SendMessage((HWND)handle,TBM_GETRANGEMIN,0,0);
-	uint32_t max=SendMessage((HWND)handle,TBM_GETRANGEMAX,0,0);
-	uint32_t v=m_f.positionGet(y,min,max);
+	pos_t max=SendMessage((HWND)handle,TBM_GETRANGEMAX,0,0);
+	pos_t v=positionGet(y,max);
 	SendMessage((HWND)handle,TBM_SETPOS,1,(LPARAM)v);
 	}
 
-void Gui::Fader::minSet(uint32_t x)
+void Gui::Fader::nDivsSet(pos_t n_divs)
 	{
 	double val=valueGet();
-	SendMessage((HWND)handle,TBM_SETRANGEMIN, 0,x);
-	valueSet(val);
-	}
-
-void Gui::Fader::maxSet(uint32_t x)
-	{
-	double val=valueGet();
-	SendMessage((HWND)handle,TBM_SETRANGEMAX, 0,x);
+	SendMessage((HWND)handle,TBM_SETRANGEMAX, 0,n_divs);
 	valueSet(val);
 	}
 	
@@ -110,9 +93,7 @@ size_t Gui::Fader::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			break;
 	
 		case MessageSetfont:
-			{
 			font_sys_current=(void*)(param_0);
-			}
 			break;
 		}
 	return WindowSystem::onEvent(event_type,param_0,param_1);
