@@ -12,7 +12,6 @@ target[
 
 
 #include "test.h"
-#include "viewsplit.h"
 #include "toolbar.h"
 #include "fader_impl.h"
 #include "font.h"
@@ -21,6 +20,7 @@ target[
 #include "combobox.h"
 #include "datetime.h"
 #include "dialog.h"
+#include "window-custom.h"
 
 namespace
 	{
