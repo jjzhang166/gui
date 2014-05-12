@@ -43,9 +43,3 @@ Gui::WindowSystem::~WindowSystem()
 	{
 	SetWindowLongPtr((HWND)handle,GWLP_WNDPROC,(LONG_PTR)winproc_old); 
 	}
-	
-void Gui::WindowSystem::fontChangeRequest(const Font& font)
-	{
-	SendMessage((HWND)handle,MessageSetfont,(WPARAM)font.handle,1);
-	}
-

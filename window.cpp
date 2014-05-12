@@ -156,3 +156,56 @@ void Gui::Window::idSet(uint32_t id_new)
 uint32_t Gui::Window::idGet() const
 	{return GetWindowLongPtr((HWND)handle,GWLP_ID);}
 
+uint32_t Gui::Window::styleGet(size_t set) const
+	{
+	switch(set)
+		{
+		case 0:
+			return GetWindowLongPtr((HWND)handle,GWL_EXSTYLE);
+		default:
+			return GetWindowLongPtr((HWND)handle,GWL_STYLE);
+		}
+	
+	}
+
+Herbs::String Gui::Window::titleGet() const
+	{
+	size_t n=GetWindowTextLength((HWND)handle);
+	Herbs::StringSys buffer(n);
+	if(n!=0)
+		{
+		buffer.lengthValidSet(n);
+		GetWindowText((HWND)handle,buffer.begin(),n+1);
+		}
+	return Herbs::stringloc(buffer);
+	}
+
+void Gui::Window::fontChangeRequest(const Font& font)
+	{
+	SendMessage((HWND)handle,MessageSetfont,(WPARAM)font.handle,1);
+	}
+
+Vector::Vector2d<int> Gui::Window::sizeLine(const Herbs::String& line) const
+	{
+	SIZE s;
+	HDC dc=GetDC((HWND)handle);
+	GetTextExtentPoint(dc,Herbs::bufferSysPtr(Herbs::stringsys(line)),line.length(),&s);
+	ReleaseDC((HWND)handle,dc);
+	return {s.cx,s.cy};	
+	}
+
+Vector::Vector2d<int> Gui::Window::sizeLine(const char_t* line) const
+	{
+	SIZE s;
+	HDC dc=GetDC((HWND)handle);
+	const size_t n=Herbs::String::count(line);
+	GetTextExtentPoint(dc,Herbs::bufferSysPtr(Herbs::stringsys(line)),n,&s);
+	ReleaseDC((HWND)handle,dc);
+	return {s.cx,s.cy};	
+	}
+
+Vector::Vector2d<int> Gui::Window::sizeContent() const
+	{
+	return sizeLine(titleGet());
+	}
+

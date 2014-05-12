@@ -19,7 +19,7 @@ namespace Gui
 				,MathExt::ValueMap<T>& val_map)
 				{
 				FaderImpl* ret=new FaderImpl(gui_obj,style_0,style_1,parent,val_map);
-				ret->nDivsSet(64);
+				ret->nDivsSet(256);
 				ret->valueSet(0);
 				return ret;
 				}

@@ -23,19 +23,13 @@ namespace Gui
 			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1);
 			virtual double positionSet(pos_t pos,pos_t n_divs) const=0;
 			virtual pos_t positionGet(double pos_new,pos_t n_divs) const=0;
-			
-			
-		
+
 		protected:
 			Fader(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);
 
 		private:
 			void* font_sys_current;
-			float font_height;
-			float font_width;
-			
-
-			
+			Vector::Vector2d<int> size_text;			
 		};
 	};
 	

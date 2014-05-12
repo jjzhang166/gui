@@ -4,30 +4,11 @@ target[name[label.o] type[object] platform[;Windows]]
 
 #include "label.h"
 
-#include <herbs/stringsys/stringsys.h>
 #include <windows.h>
 #include <algorithm>
 
 namespace
-	{
-	Vector::Vector2d<int> sizeGet(HWND handle)
-		{
-		SIZE s;
-		size_t n=GetWindowTextLength(handle);
-		Herbs::StringSys buffer(n);
-		if(n!=0)
-			{
-			buffer.lengthValidSet(n);
-			GetWindowText(handle,buffer.begin(),n+1);
-			}
-		else
-			{buffer.append(CHARSYS('A'));}
-		HDC dc=GetDC(handle);
-		GetTextExtentPoint(dc,buffer.begin(),n,&s);
-		ReleaseDC(handle,dc);
-		return {s.cx,s.cy};
-		}
-	
+	{	
 	static const uint32_t SIZE_UPDATE=STM_MSGMAX;
 	}
 
@@ -51,7 +32,7 @@ size_t Gui::Label::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			}
 			break;
 		case SIZE_UPDATE:
-			size_min=sizeGet((HWND)handle);
+			size_min=sizeContent();
 			SendMessage((HWND)handle,MessageSize,0,0);
 			SendMessage(GetParent((HWND)handle),MessageSize,0,0);
 			break;

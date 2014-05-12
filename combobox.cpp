@@ -4,31 +4,12 @@ target[name[combobox.o] type[object] platform[;Windows]]
 
 #include "combobox.h"
 
-#include <herbs/stringsys/stringsys.h>
 #include <windows.h>
 #include <algorithm>
 
 namespace
 	{
-	Vector::Vector2d<int> sizeGet(HWND handle)
-		{
-		SIZE s;
-		size_t n=GetWindowTextLength(handle);
-		Herbs::StringSys buffer(n);
-		if(n!=0)
-			{
-			buffer.lengthValidSet(n);
-			GetWindowText(handle,buffer.begin(),n+1);
-			}
-		else
-			{buffer.append(CHARSYS('A'));}
-		HDC dc=GetDC(handle);
-		GetTextExtentPoint(dc,buffer.begin(),n,&s);
-		ReleaseDC(handle,dc);
-		return {s.cx,s.cy};
-		}
-	
-	static const uint32_t SIZE_UPDATE=STM_MSGMAX;
+	static const uint32_t SIZE_UPDATE=CB_MSGMAX;
 	}
 
 Gui::Combobox::Combobox(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent):
@@ -36,13 +17,13 @@ Gui::Combobox::Combobox(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* p
 		,style_1|CBS_HASSTRINGS|CBS_DROPDOWNLIST|CBS_SIMPLE|WS_VSCROLL
 		,parent)
 	{
+	PostMessage((HWND)handle,SIZE_UPDATE,0,0);
 	}
 	
 
 Gui::Combobox& Gui::Combobox::itemAdd(const char_t* label)
 	{
 	SendMessage((HWND)handle,CB_ADDSTRING,0,(LPARAM)label);
-	PostMessage((HWND)handle,SIZE_UPDATE,0,0);
 	return *this;
 	}
 	
@@ -62,7 +43,6 @@ size_t Gui::Combobox::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	switch(event_type)
 		{
 		case MessageSetfont:
-		case MessageSettext:
 			PostMessage((HWND)handle,SIZE_UPDATE,0,0);
 			break;
 		case MessageSize:
@@ -72,7 +52,7 @@ size_t Gui::Combobox::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			}
 			break;
 		case SIZE_UPDATE:
-			size_min=sizeGet((HWND)handle);
+			size_min=sizeContent(); //sizeGet((HWND)handle);
 			SendMessage((HWND)handle,MessageSize,0,0);
 			SendMessage(GetParent((HWND)handle),MessageSize,0,0);
 			break;

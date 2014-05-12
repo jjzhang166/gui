@@ -19,8 +19,6 @@ namespace Gui
 			static WindowSystem* create(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
 				,uint32_t style_1,Window* parent)
 				{return new WindowSystem(gui_obj,classname,style_0,style_1,parent);}
-				
-			virtual void fontChangeRequest(const Font& font);
 		
 		protected:
 			WindowSystem(Gui& gui_obj,const charsys_t* classname,uint32_t style_0

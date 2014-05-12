@@ -19,6 +19,7 @@ target[
 #include "textinput.h"
 #include "label.h"
 #include "combobox.h"
+#include "datetime.h"
 
 namespace
 	{
@@ -93,6 +94,15 @@ namespace
 						gender_input->moveAbsolute({-1.0,-1.0},{0.0,row});
 						size=gender_input->sizeWindowGet();
 						row+=size.y+0.5*size.y;	
+						
+						birth_label->sizeRelative(1.0,0);
+						size=birth_label->sizeWindowGet();
+						birth_label->moveAbsolute({-1.0,-1.0},{0.0,row});
+						row+=size.y+0.25*size.y;
+						birth_input->sizeRelative(1.0,0);
+						birth_input->moveAbsolute({-1.0,-1.0},{0.0,row});
+						size=birth_input->sizeWindowGet();
+						row+=size.y+0.5*size.y;	
 						}
 						break;
 					}
@@ -152,13 +162,23 @@ namespace
 						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this);
 					gender_input->fontChangeRequest(content_font);
 					
-					gender_input->itemAdd(STR("Male"))
+					gender_input->itemAdd(STR("Neutral"))
+						.itemAdd(STR("Male"))
 						.itemAdd(STR("Female"))
 						.itemAdd(STR("Hermaphrodite"))
 						.itemSelect(0);
 					}
 					
+					{
+					birth_label=Gui::Label::create(gui_obj
+						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this);
+					birth_label->titleSet(STR("Date of birth"));
+					birth_label->fontChangeRequest(label_font);
 					
+					birth_input=Gui::Datetime::create(gui_obj
+						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this);
+					birth_input->fontChangeRequest(content_font);
+					}					
 				}
 			
 			Gui::Label* name_label;
@@ -173,6 +193,9 @@ namespace
 			
 			Gui::Label* gender_label;
 			Gui::Combobox* gender_input;
+			
+			Gui::Label* birth_label;
+			Gui::Datetime* birth_input;
 
 			Gui::Font label_font;
 			Gui::Font content_font;
@@ -183,7 +206,9 @@ namespace
 void Gui::Test::init(Herbs::Directory&& dir)
 	{
 	WindowCustom::init();
-	Toolbar::init();
+	Fader::init();
+	Datetime::init();	
+	
 	mainwin=Testwin::create(*this);
 	mainwin->popup();
 	mainwin->titleSet(STR("Gui test"));

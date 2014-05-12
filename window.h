@@ -18,6 +18,7 @@ target[
 
 #include <vector/vector2d.h>
 #include <herbs/chartype/chartype.h>
+#include <herbs/string/string.h>
 #include <cstddef>
 
 namespace Gui
@@ -26,6 +27,7 @@ namespace Gui
 	class Font;
 	
 	/**Base class for a Window.
+	\nosubgrouping
 	*/
 	class Window
 		{
@@ -34,8 +36,57 @@ namespace Gui
 				,uint32_t style_1,Window* parent);
 			
 			virtual ~Window();
+			
+			/**\name Window identification*/
+			
+			/**{*/
+			
+			/**Sets window id.
+			*/
+			void idSet(uint32_t id_new);
+			
+			/**Retrievs the window id.
+			*/
+			uint32_t idGet() const;
+			
+			/**}*/
+			
+			/**\name Window text properties.
+			*/
+			
+			/**{*/
+			
+			/**Sets the window title or text if appliciable.
+			*/			
+			virtual void titleSet(const char_t* title);
+			
+			/**Retrievs the window title or text if appliciable.
+			*/
+			virtual Herbs::String titleGet() const;
+			
+			/**Request the window change its font.
+			*/
+			virtual void fontChangeRequest(const Font& font);
+			
+			/**Retrievs the size of the redered line.
+			*/
+			Vector::Vector2d<int> sizeLine(const char_t* line) const;
+			
+			/**Retrievs the size of the redered line.
+			*/
+			Vector::Vector2d<int> sizeLine(const Herbs::String& line) const;
+			
+			/**Retrievs the size of the currently displayed content.
+			*/
+			virtual Vector::Vector2d<int> sizeContent() const;
+			/**}*/
+
 				
-		
+			
+			/**\name Window geometry*/
+			
+			/**{*/
+			
 			/**Moves the window using absolute (pixel) coordinates.
 			* \param anchor sets the coordinate of the window used for positioning.
 			*        For more details, see figure $ref("window_coordfig").
@@ -61,11 +112,22 @@ namespace Gui
 			*/
 			void sizeRelative(float width, float height);
 			
+			/**Retrievs the size of the client area.
+			*/
 			Vector::Vector2d<int> sizeClientGet() const;
 			
 			static Vector::Vector2d<int> sizeClientFromParam1(size_t param_1);
 			
+			/**Retrievs the full size of the window.
+			*/
 			Vector::Vector2d<int> sizeWindowGet() const;
+			
+			/**}*/
+			
+			
+			/**\name Window appearance*/
+			
+			/**{*/
 			
 			/**Shows the window.
 			*/
@@ -94,7 +156,19 @@ namespace Gui
 			
 			/**Sets a new window style.
 			*/
-			void styleSet(uint32_t style_0,uint32_t);
+			void styleSet(uint32_t style_0,uint32_t style_1);
+			
+			/**Gets the current window style.
+			*/
+			uint32_t styleGet(size_t set) const;
+			
+			/**Makes the window a popup window.
+			*/
+			void popup();
+			
+			/**Enables or disables the window.
+			*/
+			void enable(bool status);
 			
 			///*Styles
 			static const uint32_t StyleEx_dlgmodalframe=0x00000001;
@@ -142,35 +216,28 @@ namespace Gui
 			static const uint32_t StyleMinimizebox=0x00020000;
 			static const uint32_t StyleMaximizebox=0x00010000;
 			
-			/**Makes the window a popup window.
-			*/
-			void popup();
+			/**}*/
 			
-			/**Sets window title or text.
-			*/			
-			void titleSet(const char_t* title);
+			/**\name Communication*/
 			
-			/**Sets window id.
-			*/
-			void idSet(uint32_t id_new);
-			
-			/**Retrievs the window id.
-			*/
-			uint32_t idGet() const;
-			
-			/**Enables or disables the window.
-			*/
-			void enable(bool status);
+			/**{*/
 			
 			/**This method is called when an GUI event occurs.
 			*/
 			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)=0;
 			
-			virtual void fontChangeRequest(const Font& font){}
-
+			/**This method is called when the Window should update the value of any
+			associated data.
+			*/
 			virtual void valueUpdate(){}
 			
-		///*Messages
+			/**This method is called when the Window should update its view of any
+			associated data.
+			*/
+			virtual void displayUpdate(){}
+			
+			
+					///*Messages
 			static unsigned int const MessageNull=0x0000;
 			static unsigned int const MessageCreate=0x0001;
 			static unsigned int const MessageDestroy=0x0002;
@@ -397,6 +464,7 @@ namespace Gui
 			static unsigned int const MessageTouchdown=577;
 			static unsigned int const MessageTouchup=578;
 			
+			/**}*/
 	
 			/**Returns the a pointer to the corresponding Window given a system
 			* handle win.

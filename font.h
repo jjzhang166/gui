@@ -13,7 +13,7 @@ namespace Gui
 	{
 	class Font
 		{
-		friend class WindowSystem;
+		friend class Window;
 
 		public:
 			enum class Element:uint32_t 
