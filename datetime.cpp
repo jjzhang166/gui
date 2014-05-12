@@ -35,21 +35,24 @@ size_t Gui::Datetime::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	switch(event_type)
 		{
 		case MessageSetfont:
+			SendMessage((HWND)handle,DTM_SETMCFONT,param_0,param_1);
 			PostMessage((HWND)handle,SIZE_UPDATE,0,0);
 			break;
 		case MessageSize:
 			{
+			WindowSystem::onEvent(event_type,param_0,param_1);
 			auto size=sizeWindowGet();
 			sizeAbsolute(std::max(size.x,size_min.x),std::max(size.y,size_min.y));
+			return 0;
 			}
 			break;
 		case SIZE_UPDATE:
-			size_min=sizeContent()+Vector::Vector2d<int>{0,6};
+			size_min=sizeContent()+Vector::Vector2d<int>{0,4};
 			SendMessage((HWND)handle,MessageSize,0,0);
 			SendMessage(GetParent((HWND)handle),MessageSize,0,0);
 			break;
 		}
-	return WindowSystem::onEvent(event_type,param_0,param_1);;
+	return WindowSystem::onEvent(event_type,param_0,param_1);
 	}
 
 Herbs::String Gui::Datetime::titleGet() const
