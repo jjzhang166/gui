@@ -1,5 +1,6 @@
 #ifdef __WAND__
-target[name[datetime.o] type[object] platform[;Windows]]
+target[name[datetime.o] type[object] platform[;Windows]
+dependency[comctl32;external]]
 #endif
 
 #include "datetime.h"

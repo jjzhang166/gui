@@ -31,6 +31,7 @@ namespace Gui
 	*/
 	class Window
 		{
+		friend class Dialog;
 		public:	
 			Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
 				,uint32_t style_1,Window* parent);
@@ -237,7 +238,7 @@ namespace Gui
 			virtual void displayUpdate(){}
 			
 			
-					///*Messages
+			///*Messages
 			static unsigned int const MessageNull=0x0000;
 			static unsigned int const MessageCreate=0x0001;
 			static unsigned int const MessageDestroy=0x0002;

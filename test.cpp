@@ -20,6 +20,7 @@ target[
 #include "label.h"
 #include "combobox.h"
 #include "datetime.h"
+#include "dialog.h"
 
 namespace
 	{
@@ -49,6 +50,8 @@ namespace
 				
 			void onCommand(uint32_t event_status,uint32_t control_id,Window& source)
 				{
+				
+				
 				}
 				
 			size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)
@@ -113,11 +116,7 @@ namespace
 			Testwin(Gui::Gui& gui_obj):Gui::WindowCustom(gui_obj,0,0,nullptr)
 				,label_font(Gui::Font::fromThemeGet(Gui::Font::Element::CAPTION_SMALL))
 				,content_font(Gui::Font::fromThemeGet(Gui::Font::Element::WIDGET))
-				{
-			/*	tools=Gui::Toolbar::create(gui_obj,0
-					,Window::StyleChild|Window::StyleVisible,this);
-				tools->buttonAdd(STR("Hello")).buttonAdd(STR("World"));*/
-				
+				{				
 					{
 					name_label=Gui::Label::create(gui_obj
 						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this);
@@ -178,7 +177,10 @@ namespace
 					birth_input=Gui::Datetime::create(gui_obj
 						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this);
 					birth_input->fontChangeRequest(content_font);
-					}					
+					}
+				
+				Gui::Dialog::filenameGet(this,path,1);
+				Gui::Dialog::filenameGet(this,path,1);
 				}
 			
 			Gui::Label* name_label;
@@ -199,6 +201,8 @@ namespace
 
 			Gui::Font label_font;
 			Gui::Font content_font;
+			
+			Herbs::Path path;
 			
 		};
 	}
