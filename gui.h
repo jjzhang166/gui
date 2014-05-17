@@ -27,7 +27,8 @@ namespace Gui
 		{
 		friend class Window;
 		public:
-			Gui():window_count(0){}
+			Gui(Herbs::LogWriter& writer):
+				Herbs::Application(writer),window_count(0){}
 			
 			/**Runs the message loop as long as there are Window objects 
 			* associated with current thread.

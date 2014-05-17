@@ -179,8 +179,8 @@ namespace
 					birth_input->fontChangeRequest(content_font);
 					}
 				
-				Gui::Dialog::filenameGet(this,path,1);
-				Gui::Dialog::filenameGet(this,path,1);
+				Gui::Dialog::prompt(this,path,1);
+				Gui::Dialog::prompt(this,path,1);
 				}
 			
 			Gui::Label* name_label;
@@ -207,7 +207,8 @@ namespace
 		};
 	}
 
-void Gui::Test::init(Herbs::Directory&& dir)
+Gui::Test::Test(Herbs::LogWriter& writer,Herbs::Directory&& dir)
+	:Gui::Gui(writer)
 	{
 	WindowCustom::init();
 	Fader::init();
@@ -220,7 +221,6 @@ void Gui::Test::init(Herbs::Directory&& dir)
 	mainwin->moveRelative(Vector::Vector2d<float>(0,0)
 		,Vector::Vector2d<float>(0.5,0.5));	
 	mainwin->show(Window::DisplayNormal);
-
 	}
 
 Gui::Test::~Test()

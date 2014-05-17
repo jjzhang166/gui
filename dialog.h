@@ -7,6 +7,7 @@ dependency[dialog.o]
 #define GUI_DIALOG_H
 
 #include <herbs/path/path.h>
+#include <herbs/logmessage/logmessage.h>
 
 namespace Gui
 	{
@@ -14,12 +15,6 @@ namespace Gui
 	class Dialog
 		{
 		public:
-			enum class MessageType:unsigned int
-				{
-				 INFORMATION
-				,WARNING
-				,ERROR
-				};
 			enum class MessageStatus:unsigned int
 				{
 				 OK
@@ -27,10 +22,15 @@ namespace Gui
 				,YES
 				,NO
 				};
-			static MessageStatus messageDisplay(Window* parent,const char_t* message
-				,const char_t* caption,MessageType type);
+
+			static MessageStatus messageDisplay(Window* parent
+				,const Herbs::LogMessage& message
+				,const char_t* caption);
+				
+			static const int FILENAMEPROMPT_READ=0;
+			static const int FILENAMEPROMPT_WRITE=1;
 			
-			static bool filenameGet(Window* parent,Herbs::Path& path_in,bool write);
+			static bool prompt(Window* parent,Herbs::Path& path_in,int mode);
 		};
 	}
 

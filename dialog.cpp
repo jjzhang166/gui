@@ -12,16 +12,33 @@ dependency[comdlg32;external]
 #undef ERROR
 #endif
 
-Gui::Dialog::MessageStatus Gui::Dialog::messageDisplay(Window* parent,const char_t* message
-	,const char_t* caption,MessageType type)
+Gui::Dialog::MessageStatus Gui::Dialog::messageDisplay(Window* parent
+	,const Herbs::LogMessage& message
+	,const char_t* caption)
 	{
 	HWND handle=(HWND)Window::handleGet(parent);
 	
-	unsigned int flags=0;
+	int flags=0;
+	
+	switch(message.m_type)
+		{
+		case Herbs::LogMessage::Type::INFORMATION:
+			flags=MB_ICONINFORMATION;
+			break;
+		case Herbs::LogMessage::Type::WARNING:
+			flags=MB_ICONWARNING;
+			break;
+		case Herbs::LogMessage::Type::ERROR:
+			flags=MB_ICONERROR;
+			break;
+		case Herbs::LogMessage::Type::NOT_SPECIFIED:
+			flags=0;
+			break;
+		}
 	
 	//	Check if the caller asks a question
 		{
-		auto mptr=message;
+		auto mptr=message.m_message;
 		while(*mptr)
 			{
 			switch(*mptr)
@@ -39,21 +56,9 @@ Gui::Dialog::MessageStatus Gui::Dialog::messageDisplay(Window* parent,const char
 			++mptr;
 			}
 		}
-	
-	switch(type)
-		{
-		case MessageType::INFORMATION:
-			flags|=MB_ICONINFORMATION;
-			break;
-		case MessageType::WARNING:
-			flags|=MB_ICONWARNING;
-			break;
-		case MessageType::ERROR:
-			flags|=MB_ICONERROR;
-			break;
-		}
 		
-	switch(MessageBox(handle,message,caption,flags))
+	switch(MessageBox(handle,Herbs::bufferSysPtr(Herbs::stringsys(message.m_message))
+		,Herbs::bufferSysPtr(Herbs::stringsys(caption)),flags))
 		{
 		case IDOK:
 			return MessageStatus::OK;
@@ -68,7 +73,7 @@ Gui::Dialog::MessageStatus Gui::Dialog::messageDisplay(Window* parent,const char
 		}
 	}
 
-bool Gui::Dialog::filenameGet(Window* parent,Herbs::Path& path_in,bool write)
+bool Gui::Dialog::prompt(Window* parent,Herbs::Path& path_in,int mode)
 	{
 	bool ret;
 	Herbs::StringSys path_str(0x7fff);
@@ -85,7 +90,7 @@ bool Gui::Dialog::filenameGet(Window* parent,Herbs::Path& path_in,bool write)
 	ofn.Flags=OFN_ENABLESIZING|OFN_HIDEREADONLY|OFN_LONGNAMES|OFN_NOTESTFILECREATE
 		|OFN_NODEREFERENCELINKS|OFN_PATHMUSTEXIST;
 	
-	if(!write)
+	if(mode==FILENAMEPROMPT_READ)
 		{
 		ofn.Flags|=OFN_FILEMUSTEXIST;
 		ret=GetOpenFileName(&ofn);

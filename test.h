@@ -25,7 +25,7 @@ namespace Gui
 	class Test:public Gui
 		{
 		public:			
-			void init(Herbs::Directory&& dir);
+			Test(Herbs::LogWriter& logwriter,Herbs::Directory&& dir);
 			
 			/**Lets the object commit suicide.
 			*/
