@@ -52,6 +52,9 @@ size_t Gui::Datetime::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			SendMessage((HWND)handle,MessageSize,0,0);
 			SendMessage(GetParent((HWND)handle),MessageSize,0,0);
 			break;
+		case MessageKillfocus:
+			SendMessage(GetParent((HWND)handle),MessageCommand,idGet(),(LPARAM)handle);
+			break;
 		}
 	return WindowSystem::onEvent(event_type,param_0,param_1);
 	}
