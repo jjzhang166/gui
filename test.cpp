@@ -114,8 +114,8 @@ namespace
 				
 		private:
 			Testwin(Gui::Gui& gui_obj):Gui::WindowCustom(gui_obj,0,0,nullptr)
-				,label_font(Gui::Font::fromThemeGet(Gui::Font::Element::CAPTION_SMALL))
-				,content_font(Gui::Font::fromThemeGet(Gui::Font::Element::WIDGET))
+				,label_font(Gui::Font::Element::CAPTION_SMALL)
+				,content_font(Gui::Font::Element::WIDGET)
 				{				
 					{
 					name_label=Gui::Label::create(gui_obj
@@ -147,7 +147,7 @@ namespace
 			
 					length_input=Gui::FaderImpl<double>::create(gui_obj
 						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this
-						,length_map);
+						,length_map,length);
 					length_input->fontChangeRequest(content_font);
 					}
 					
@@ -203,6 +203,7 @@ namespace
 			Gui::Font content_font;
 			
 			Herbs::Path path;
+			double length;
 			
 		};
 	}

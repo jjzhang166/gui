@@ -26,7 +26,7 @@ namespace Gui
 				,TOOLTIP
 				};
 	
-			static Font fromThemeGet(Element e);
+			Font(Element e);
 			
 			Font(const Font&)=delete;
 			void operator=(const Font&)=delete;
@@ -43,7 +43,6 @@ namespace Gui
 			~Font();
 	
 		private:
-			Font(void* h);
 			void* handle;
 		};
 	}

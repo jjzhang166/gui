@@ -74,18 +74,8 @@ void Gui::Window::moveRelative(Vector::Vector2d<float> anchor,Vector::Vector2d<f
 	}
 
 void Gui::Window::sizeAbsolute(int width,int height)
-	{
-	RECT winrect;
-	GetWindowRect((HWND)handle,&winrect);
-	const size_t style=GetWindowLongPtr((HWND)handle,GWL_STYLE);
-	if(style&WS_CHILD)
-		{
-		POINT p{winrect.left,winrect.top};
-		ScreenToClient((HWND)handle,&p);
-		winrect.left=p.x;
-		winrect.top=p.y;
-		}
-	MoveWindow((HWND)handle,winrect.left,winrect.top,width,height,TRUE);
+	{		
+	SetWindowPos((HWND)handle,HWND_TOP,0,0,width,height,SWP_NOMOVE|SWP_NOZORDER);
 	}
 
 void Gui::Window::sizeRelative(float width,float height)

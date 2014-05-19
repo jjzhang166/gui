@@ -237,6 +237,7 @@ namespace Gui
 			*/
 			virtual void displayUpdate(){}
 			
+
 			
 			///*Messages
 			static unsigned int const MessageNull=0x0000;

@@ -69,7 +69,9 @@ Herbs::String Gui::Datetime::titleGet() const
 	
 	ret.append(Herbs::IntFormat<unsigned int>(st.wMonth)).append('-');
 	if(st.wDay<10)
-		{ret.append(Herbs::IntFormat<unsigned int>(st.wDay)).append(' ');}
+		{ret.append('0');}
+		
+	ret.append(Herbs::IntFormat<unsigned int>(st.wDay)).append(' ');
 	
 	ret.append(Herbs::IntFormat<unsigned int>(st.wHour)).append(':');
 	if(st.wMinute<10)

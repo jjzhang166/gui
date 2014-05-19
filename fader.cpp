@@ -80,6 +80,7 @@ size_t Gui::Fader::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 				); 
 				
 			ReleaseDC((HWND)handle,dc);
+			PostMessage(GetParent((HWND)handle),MessageCommand,idGet(),(LPARAM)handle);
 			}
 			break;
 			

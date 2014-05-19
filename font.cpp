@@ -5,16 +5,13 @@ target[type[object]name[font.o] platform[;Windows] dependency[gdi32;external]]
 #include "font.h"
 #include <windows.h>
 
-Gui::Font::Font(void* h):handle(h)
-	{}
-
 Gui::Font::~Font()
 	{
 	if(handle!=nullptr)
 		{DeleteObject(handle);}
 	}
 
-Gui::Font Gui::Font::fromThemeGet(Element e)
+Gui::Font::Font(Element e)
 	{
 	NONCLIENTMETRICS ncm;
 	ncm.cbSize=sizeof(ncm);
@@ -23,16 +20,21 @@ Gui::Font Gui::Font::fromThemeGet(Element e)
 	switch(e)
 		{
 		case Element::CAPTION:
-			return Font(CreateFontIndirect(&ncm.lfCaptionFont));
+			handle=CreateFontIndirect(&ncm.lfCaptionFont);
+			break;
 		case Element::CAPTION_SMALL:
-			return Font(CreateFontIndirect(&ncm.lfSmCaptionFont));
+			handle=CreateFontIndirect(&ncm.lfSmCaptionFont);
+			break;
 		case Element::MESSAGE:
-			return Font(CreateFontIndirect(&ncm.lfMessageFont));
+			handle=CreateFontIndirect(&ncm.lfMessageFont);
+			break;
 		case Element::ICON:
 		case Element::WIDGET:
-			return Font(CreateFontIndirect(&ncm.lfMenuFont));
+			handle=CreateFontIndirect(&ncm.lfMenuFont);
+			break;
+			
 		case Element::TOOLTIP:
-			return Font(CreateFontIndirect(&ncm.lfStatusFont));
+			handle=CreateFontIndirect(&ncm.lfStatusFont);
+			break;
 		}
-	abort();
 	}

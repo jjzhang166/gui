@@ -16,11 +16,11 @@ namespace Gui
 		public:
 			static FaderImpl* create(Gui& gui_obj
 				,uint32_t style_0,uint32_t style_1,Window* parent
-				,MathExt::ValueMap<T>& val_map)
+				,MathExt::ValueMap<T>& val_map
+				,T& val)
 				{
-				FaderImpl* ret=new FaderImpl(gui_obj,style_0,style_1,parent,val_map);
+				FaderImpl* ret=new FaderImpl(gui_obj,style_0,style_1,parent,val_map,val);
 				ret->nDivsSet(256);
-				ret->valueSet(0);
 				return ret;
 				}
 			
@@ -33,24 +33,34 @@ namespace Gui
 				
 			virtual Fader::pos_t positionGet(double pos_new,Fader::pos_t n_divs) const
 				{
-				double pos_norm=(pos_new - m_range.m_lower)/
-					(m_range.m_higher - m_range.m_lower);
-				return n_divs*m_val_map.backward(pos_norm) + 0.5;
+				return n_divs*m_val_map.backward(pos_new) + 0.5;
+				}
+				
+			void displayUpdate()
+				{
+				valueSet(m_val);
+				}
+			
+			void valueUpdate()
+				{
+				m_val=valueGet();
 				}
 			
 		protected:
 			FaderImpl(Gui& gui_obj,uint32_t style_0,uint32_t style_1
-				,Window* parent,MathExt::ValueMap<T>& val_map):
+				,Window* parent,MathExt::ValueMap<T>& val_map,T& val):
 				Fader(gui_obj,style_0,style_1,parent)
 				,m_val_map(val_map)
 				,m_domain(val_map.domain())
 				,m_range(val_map.range())
+				,m_val(val)
 				{}
 			
 		private:
 			MathExt::ValueMap<T>& m_val_map;
 			MathExt::Interval<T> m_domain;
 			MathExt::Interval<T> m_range;
+			T& m_val;
 		};
 	}
 

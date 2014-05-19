@@ -1,5 +1,5 @@
 #ifdef __WAND__
-target[name[window-custom.o] type[object] platform[;Windows]]
+target[name[window-custom.o] type[object] platform[;Windows] dependency[gdi32;external]]
 #endif
 
 #include "window-custom.h"
@@ -33,6 +33,12 @@ namespace
 				}
 				break;
 				
+			case WM_CTLCOLORSTATIC:
+				{
+				return (LRESULT)GetSysColorBrush(COLOR_WINDOW);
+				}
+				break;
+			
 			case WM_DESTROY:
 				delete obj;
 				break;
