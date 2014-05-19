@@ -52,14 +52,12 @@ namespace Gui
 				Fader(gui_obj,style_0,style_1,parent)
 				,m_val_map(val_map)
 				,m_domain(val_map.domain())
-				,m_range(val_map.range())
 				,m_val(val)
 				{}
 			
 		private:
 			MathExt::ValueMap<T>& m_val_map;
 			MathExt::Interval<T> m_domain;
-			MathExt::Interval<T> m_range;
 			T& m_val;
 		};
 	}

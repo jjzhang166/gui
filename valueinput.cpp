@@ -15,6 +15,16 @@ namespace Gui
 	template<class T>
 	void ValueInput<T>::displayUpdate()
 		{titleSet(Herbs::IntFormat<T>(*ptr_obj) );}
+		
+	template void ValueInput<int32_t>::valueUpdate();
+	template void ValueInput<uint32_t>::valueUpdate();
+	template void ValueInput<int64_t>::valueUpdate();
+	template void ValueInput<uint64_t>::valueUpdate();
+	
+	template void ValueInput<int32_t>::displayUpdate();
+	template void ValueInput<uint32_t>::displayUpdate();
+	template void ValueInput<int64_t>::displayUpdate();
+	template void ValueInput<uint64_t>::displayUpdate();
 	
 	
 	template<>

@@ -34,16 +34,6 @@ namespace Gui
 		};
 		
 	template<>
-	void ValueInput<int32_t>::displayUpdate();
-	template<>
-	void ValueInput<uint32_t>::displayUpdate();
-	
-	template<>
-	void ValueInput<int64_t>::displayUpdate();
-	template<>
-	void ValueInput<uint64_t>::displayUpdate();
-		
-	template<>
 	void ValueInput<double>::displayUpdate();
 	template<>
 	void ValueInput<double>::valueUpdate();
