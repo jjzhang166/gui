@@ -4,6 +4,7 @@ target[name[window-system.o] type[object] platform[;Windows]]
 
 #include "window-system.h"
 #include "font.h"
+#include "gui.h"
 #include <herbs/exceptionmissing/exceptionmissing.h>
 #include <windows.h>
 
@@ -13,15 +14,24 @@ namespace
 		,WPARAM param_0,LPARAM param_1)
 		{
 		Gui::WindowSystem* window=(Gui::WindowSystem*)Gui::Window::objectGet(handle);
+		LRESULT ret;
+		try
+			{
+			ret=window->onEvent(event_type,param_0,param_1);
+			}
+		catch(const Herbs::Exception& e)
+			{
+			e.print(window->hostGet().sysout());
+			ret=window->Gui::WindowSystem::onEvent(event_type,param_0,param_1);
+			}
 		
-		LRESULT ret=window->onEvent(event_type,param_0,param_1);
-
 		switch(event_type)
 			{
 			case Gui::Window::MessageDestroy:
 				delete window;
 				break;
 			}
+	
 		return ret;
 		}
 	

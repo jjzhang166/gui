@@ -3,6 +3,7 @@ target[name[window-custom.o] type[object] platform[;Windows] dependency[gdi32;ex
 #endif
 
 #include "window-custom.h"
+#include "gui.h"
 #include <herbs/exceptionmissing/exceptionmissing.h>
 #include <windows.h>
 
@@ -16,39 +17,44 @@ namespace
 		Gui::WindowCustom* obj=(Gui::WindowCustom*)Gui::Window::objectGet(handle);
 		if(obj==nullptr)
 			{return DefWindowProc(handle,event_type,param_0,param_1);}
-		switch(event_type)
+		
+		try
 			{
-			case WM_COMMAND:
+			switch(event_type)
 				{
-				if(param_1!=0)
+				case WM_COMMAND:
 					{
-					Gui::Window* source=Gui::Window::objectGet((HWND)param_1);
-					if(source!=nullptr)
+					if(param_1!=0)
 						{
-						obj->onCommand(HIWORD(param_0),LOWORD(param_0),*source);
-						return DefWindowProc(handle,event_type,param_0,param_1);
+						Gui::Window* source=Gui::Window::objectGet((HWND)param_1);
+						if(source!=nullptr)
+							{
+							obj->onCommand(HIWORD(param_0),LOWORD(param_0),*source);
+							return DefWindowProc(handle,event_type,param_0,param_1);
+							}
 						}
+					return DefWindowProc(handle,event_type,param_0,param_1);
 					}
-				return obj->onEvent(event_type,param_0,param_1);
-				}
-				break;
+					break;
+					
+				case WM_CTLCOLORSTATIC:
+					return (LRESULT)GetSysColorBrush(COLOR_WINDOW);
 				
-			case WM_CTLCOLORSTATIC:
-				{
-				return (LRESULT)GetSysColorBrush(COLOR_WINDOW);
+				case WM_DESTROY:
+					delete obj;
+					break;
+					
+				default:
+					return obj->onEvent(event_type,param_0,param_1);
 				}
-				break;
-			
-			case WM_DESTROY:
-				delete obj;
-				break;
-				
-			default:
-				return obj->onEvent(event_type,param_0,param_1);
+			return DefWindowProc(handle,event_type,param_0,param_1);
 			}
-		return DefWindowProc(handle,event_type,param_0,param_1);
-		}	
-	
+		catch(const Herbs::Exception& e)
+			{
+			e.print(obj->hostGet().sysout());
+			return DefWindowProc(handle,event_type,param_0,param_1);
+			}
+		}
 	}
 	
 void Gui::WindowCustom::init()

@@ -32,7 +32,12 @@ namespace Gui
 	class Window
 		{
 		friend class Dialog;
-		public:	
+		public:
+			Window(const Window&)=delete;
+			void operator=(const Window&)=delete;
+			Window(Window&&)=delete;
+			void operator=(Window&&)=delete;
+			
 			Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
 				,uint32_t style_1,Window* parent);
 			
@@ -472,6 +477,9 @@ namespace Gui
 			* handle win.
 			*/
 			static Window* objectGet(void* win);
+			
+			Gui& hostGet() const
+				{return m_gui;}
 	
 		protected:
 				
