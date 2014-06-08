@@ -26,6 +26,11 @@ Gui::Window* Gui::Window::objectGet(void* handle)
 	{
 	return (Window*)GetProp((HWND)handle,propname);
 	}
+	
+void Gui::Window::focusSet()
+	{
+	SetFocus((HWND)handle);
+	}
 
 Gui::Window::Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
 	,uint32_t style_1,Window* parent):m_gui(gui_obj)
@@ -40,6 +45,7 @@ Gui::Window::Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
 		throw Herbs::ExceptionMissing(___FILE__,__LINE__);
 		}
 	m_gui.windowCountInc();
+	m_parent=parent;
 	SetProp((HWND)handle,propname,this);
 	}
 
@@ -47,6 +53,11 @@ Gui::Window::~Window()
 	{
 	RemoveProp((HWND)handle,propname);
 	m_gui.windowCountDec();
+	}
+	
+void Gui::Window::destroy()
+	{
+	DestroyWindow((HWND)handle);
 	}
 
 void Gui::Window::moveAbsolute(Vector::Vector2d<float> anchor
@@ -74,8 +85,14 @@ void Gui::Window::moveRelative(Vector::Vector2d<float> anchor,Vector::Vector2d<f
 	}
 
 void Gui::Window::sizeAbsolute(int width,int height)
-	{		
+	{
 	SetWindowPos((HWND)handle,HWND_TOP,0,0,width,height,SWP_NOMOVE|SWP_NOZORDER);
+	}
+
+void Gui::Window::sizeMinimize()
+	{
+	sizeAbsolute(0,0);
+	SendMessage((HWND)handle,MessageSize,0,0);
 	}
 
 void Gui::Window::sizeRelative(float width,float height)
@@ -157,6 +174,23 @@ uint32_t Gui::Window::styleGet(size_t set) const
 		}
 	
 	}
+	
+Vector::Vector2d<int> Gui::Window::positionAbsoluteGet() const
+	{
+	RECT pos;
+	GetWindowRect((HWND)handle,&pos);
+	
+	if(styleGet(1)&StyleChild)
+		{
+		POINT p={pos.left,pos.top};
+		Window* parent=parentGet();
+		
+		ScreenToClient((HWND)parent->handle,&p);
+		return {p.x,p.y};
+		}
+	else
+		{return {pos.left,pos.top};}
+	}
 
 Herbs::String Gui::Window::titleGet() const
 	{
@@ -179,6 +213,8 @@ Vector::Vector2d<int> Gui::Window::sizeLine(const Herbs::String& line) const
 	{
 	SIZE s;
 	HDC dc=GetDC((HWND)handle);
+	HFONT font=(HFONT)SendMessage((HWND)handle,WM_GETFONT,0,0);
+	SelectObject(dc,font);
 	GetTextExtentPoint(dc,Herbs::bufferSysPtr(Herbs::stringsys(line)),line.length(),&s);
 	ReleaseDC((HWND)handle,dc);
 	return {s.cx,s.cy};	
@@ -188,7 +224,9 @@ Vector::Vector2d<int> Gui::Window::sizeLine(const char_t* line) const
 	{
 	SIZE s;
 	HDC dc=GetDC((HWND)handle);
+	HFONT font=(HFONT)SendMessage((HWND)handle,WM_GETFONT,0,0);
 	const size_t n=Herbs::String::count(line);
+	SelectObject(dc,font);
 	GetTextExtentPoint(dc,Herbs::bufferSysPtr(Herbs::stringsys(line)),n,&s);
 	ReleaseDC((HWND)handle,dc);
 	return {s.cx,s.cy};	
@@ -199,3 +237,12 @@ Vector::Vector2d<int> Gui::Window::sizeContent() const
 	return sizeLine(titleGet());
 	}
 
+void Gui::Window::dialogActivate()
+	{
+	m_gui.dialog_active=handle;
+	}
+
+void Gui::Window::dialogDeactivate()
+	{
+	m_gui.dialog_active=NULL;
+	}

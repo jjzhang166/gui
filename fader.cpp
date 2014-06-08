@@ -103,7 +103,7 @@ size_t Gui::Fader::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			
 		case SIZE_UPDATE:
 			size_text=sizeLine(Herbs::FloatFormat<15>(valueGet()));
-			break;
+			return 0;
 		}
 	return WindowSystem::onEvent(event_type,param_0,param_1);
 	}

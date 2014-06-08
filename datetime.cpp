@@ -31,6 +31,12 @@ Gui::Datetime::Datetime(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* p
 	PostMessage((HWND)handle,SIZE_UPDATE,0,0);
 	}
 
+void Gui::Datetime::sizeMinimize()
+	{
+	SendMessage((HWND)handle,SIZE_UPDATE,0,0);
+	Window::sizeMinimize();
+	}
+
 size_t Gui::Datetime::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	{
 	switch(event_type)
@@ -48,10 +54,8 @@ size_t Gui::Datetime::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			}
 			break;
 		case SIZE_UPDATE:
-			size_min=sizeContent()+Vector::Vector2d<int>{0,4};
-			SendMessage((HWND)handle,MessageSize,0,0);
-			SendMessage(GetParent((HWND)handle),MessageSize,0,0);
-			break;
+			size_min=sizeContent()+Vector::Vector2d<int>{0,8};
+			return 0;
 		case MessageKillfocus:
 			SendMessage(GetParent((HWND)handle),MessageCommand,idGet(),(LPARAM)handle);
 			break;

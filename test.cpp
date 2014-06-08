@@ -48,9 +48,9 @@ namespace
 				return new Testwin(gui_obj);
 				}
 				
-			void onCommand(uint32_t event_status,uint32_t control_id,Window& source)
+			size_t onCommand(uint32_t event_status,uint32_t control_id,Window& source)
 				{
-				
+				return 0;
 				
 				}
 				
@@ -178,9 +178,6 @@ namespace
 						,0,Window::StyleBorder|Window::StyleChild|Window::StyleVisible,this);
 					birth_input->fontChangeRequest(content_font);
 					}
-				
-				Gui::Dialog::prompt(this,path,1);
-				Gui::Dialog::prompt(this,path,1);
 				}
 			
 			Gui::Label* name_label;

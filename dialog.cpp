@@ -12,7 +12,7 @@ dependency[comdlg32;external]
 #undef ERROR
 #endif
 
-Gui::Dialog::MessageStatus Gui::Dialog::messageDisplay(Window* parent
+unsigned int Gui::Dialog::messageDisplay(Window* parent
 	,const Herbs::LogMessage& message
 	,const char_t* caption)
 	{
@@ -61,15 +61,15 @@ Gui::Dialog::MessageStatus Gui::Dialog::messageDisplay(Window* parent
 		,Herbs::bufferSysPtr(Herbs::stringsys(caption)),flags))
 		{
 		case IDOK:
-			return MessageStatus::OK;
+			return MESSAGESTATUS_OK;
 		case IDCANCEL:
-			return MessageStatus::CANCEL;
+			return MESSAGESTATUS_CANCEL;
 		case IDYES:
-			return MessageStatus::YES;
+			return MESSAGESTATUS_YES;
 		case IDNO:
-			return MessageStatus::NO;
+			return MESSAGESTATUS_NO;
 		default:
-			return MessageStatus::CANCEL;
+			return MESSAGESTATUS_CANCEL;
 		}
 	}
 

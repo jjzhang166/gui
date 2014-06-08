@@ -1,8 +1,8 @@
 #ifdef __WAND__
-target[name[label.o] type[object] platform[;Windows]]
+target[name[button.o] type[object] platform[;Windows]]
 #endif
 
-#include "label.h"
+#include "button.h"
 
 #include <windows.h>
 #include <algorithm>
@@ -12,18 +12,18 @@ namespace
 	static const uint32_t SIZE_UPDATE=STM_MSGMAX;
 	}
 
-Gui::Label::Label(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent):
-	WindowSystem(gui_obj,STR("STATIC"),style_0,style_1,parent)
+Gui::Button::Button(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent):
+	WindowSystem(gui_obj,STR("BUTTON"),style_0,style_1|BS_PUSHBUTTON,parent)
 	{
 	}
 
-void Gui::Label::sizeMinimize()
+void Gui::Button::sizeMinimize()
 	{
 	SendMessage((HWND)handle,SIZE_UPDATE,0,0);
 	Window::sizeMinimize();
 	}
 
-size_t Gui::Label::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
+size_t Gui::Button::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	{
 	switch(event_type)
 		{
@@ -38,7 +38,7 @@ size_t Gui::Label::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			}
 			break;
 		case SIZE_UPDATE:
-			size_min=sizeContent();
+			size_min=sizeContent()+Vector::Vector2d<int>{4,4};
 			break;
 		}
 	return WindowSystem::onEvent(event_type,param_0,param_1);;

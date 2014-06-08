@@ -26,6 +26,12 @@ namespace Gui
 			Combobox& itemSelect(size_t index);
 			
 			size_t itemSelectedGet() const;
+			
+			void itemsClear();
+			
+			void sizeMinimize();
+			
+			static const uint32_t NotifySelchange=1;
 		
 		protected:
 			Combobox(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);

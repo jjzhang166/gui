@@ -22,6 +22,11 @@ int Gui::Gui::run()
 		{
 		if(GetMessage(&message, NULL, 0, 0) > 0)
 			{
+			if(dialog_active!=NULL)
+				{
+				if(IsDialogMessage((HWND)dialog_active,&message))
+					{continue;}
+				}
 			TranslateMessage(&message);
 			DispatchMessage(&message);
 			}

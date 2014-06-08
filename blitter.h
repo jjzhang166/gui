@@ -8,6 +8,7 @@ target[name[blitter.h] type[include]]
 
 #include "window-custom.h"
 #include <vector/matrixstorage.h>
+#include <herbs/mutexblocklw/mutexblocklw.h>
 
 namespace Gui
 	{
@@ -31,17 +32,18 @@ namespace Gui
 				{return new Blitter(gui_obj,style_0,style_1,parent);}
 			
 			void pixelsSet(const Vector::MatrixStorage<PixelBGRA<float> >& bitmap);
+			void pixelsSet(const Vector::MatrixStorage<float>& graymap);
 			
 		protected:
 			Blitter(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);
 			~Blitter();
 		
 		private:
-			const Vector::MatrixStorage<PixelBGRA<float> >* image_in;
+			Vector::MatrixStorage<PixelBGRA<uint8_t> > image_in;
 			Vector::MatrixStorage<PixelBGRA<uint8_t> > image_out;
-			void bitmapCopy();
 			void* dc_out;
-			void* thread_lock;
+			Herbs::MutexBlockLW resize_block;
+			void bitmapCopy();
 		};
 	}
 	

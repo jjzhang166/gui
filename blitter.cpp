@@ -26,11 +26,9 @@ namespace
 	}
 
 Gui::Blitter::Blitter(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent):
-	WindowCustom(gui_obj,style_0,style_1,parent),image_in(nullptr),image_out(1,1)
+	WindowCustom(gui_obj,style_0,style_1,parent),image_in(1,1),image_out(1,1)
 	{
 	dc_out=GetDC((HWND)handle);
-	thread_lock=(CRITICAL_SECTION*)Herbs::malloc<CRITICAL_SECTION>(1);
-	InitializeCriticalSection((CRITICAL_SECTION*)thread_lock);
 	}
 
 size_t Gui::Blitter::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
@@ -49,9 +47,8 @@ size_t Gui::Blitter::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 		case MessageSize:
 			{
 			auto size_this=sizeClientFromParam1(param_1);
-			EnterCriticalSection((CRITICAL_SECTION*)thread_lock);
+			Herbs::MutexBlockLW::Guard guard(resize_block);
 			image_out.resize(size_this.y,size_this.x);
-			LeaveCriticalSection((CRITICAL_SECTION*)thread_lock);
 			bitmapCopy();
 			}
 			break;
@@ -61,36 +58,62 @@ size_t Gui::Blitter::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 	
 void Gui::Blitter::pixelsSet(const Vector::MatrixStorage<PixelBGRA<float> >& bitmap)
 	{
-	image_in=&bitmap;
+	Herbs::MutexBlockLW::Guard guard(resize_block);
+	image_in.resize(bitmap.nRowsGet(),bitmap.nColsGet());
+	for(size_t k=0;k<image_in.nRowsGet();++k)
+		{
+		for(size_t l=0;l<image_in.nColsGet();++l)
+			{
+			image_in(k,l).blue =255*std::min(bitmap(k,l).blue,1.0f);
+			image_in(k,l).green=255*std::min(bitmap(k,l).green,1.0f);
+			image_in(k,l).red  =255*std::min(bitmap(k,l).red,1.0f);
+			image_in(k,l).alpha=255;
+			}
+		}
 	bitmapCopy();
-	draw((HDC)dc_out,image_out);
+	PostMessage(NULL,WM_USER,0,0); //Fix Wine redraw issue
+	}
+
+void Gui::Blitter::pixelsSet(const Vector::MatrixStorage<float>& graymap)
+	{
+	Herbs::MutexBlockLW::Guard guard(resize_block);
+	image_in.resize(graymap.nRowsGet(),graymap.nColsGet());
+	for(size_t k=0;k<image_in.nRowsGet();++k)
+		{
+		for(size_t l=0;l<image_in.nColsGet();++l)
+			{
+			float v=std::min( graymap(k,l), 1.0f);
+			
+			image_in(k,l).blue =255*v;
+			image_in(k,l).green=255*v;
+			image_in(k,l).red  =255*v;
+			image_in(k,l).alpha=255;
+			}
+		}
+	bitmapCopy();
+	PostMessage(NULL,WM_USER,0,0); //Fix Wine redraw issue
 	}
 
 void Gui::Blitter::bitmapCopy()
 	{
-	if(image_in!=nullptr)
+	if(image_in.nColsGet()!=0 && image_in.nRowsGet()!=0)
 		{
-		EnterCriticalSection((CRITICAL_SECTION*)thread_lock);
-		float sx=float(image_in->nColsGet())/image_out.nColsGet();
-		float sy=float(image_in->nRowsGet())/image_out.nRowsGet();
+		float s_x=float(image_in.nColsGet())/image_out.nColsGet();
+		float s_y=float(image_in.nRowsGet())/image_out.nRowsGet();
 		for(size_t k=0;k<image_out.nRowsGet();++k)
 			{
 			for(size_t l=0;l<image_out.nColsGet();++l)
 				{
-				size_t sk=(size_t)(sy*k);
-				size_t sl=(size_t)(sx*l);
-				image_out(k,l).blue=255* (*image_in)(sk,sl).blue;
-				image_out(k,l).green=255* (*image_in)(sk,sl).green;
-				image_out(k,l).red=255* (*image_in)(sk,sl).red;
-				image_out(k,l).alpha=255;
+				size_t s_k=size_t(s_y*k);
+				size_t s_l=size_t(s_x*l);
+				image_out(k,l)=image_in(s_k,s_l);
 				}
 			}
-		LeaveCriticalSection((CRITICAL_SECTION*)thread_lock);
+		draw((HDC)dc_out,image_out);
 		}
 	}
 	
 Gui::Blitter::~Blitter()
 	{
-	Herbs::free((CRITICAL_SECTION*)thread_lock);
 	ReleaseDC((HWND)handle,(HDC)dc_out);
 	}

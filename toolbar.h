@@ -15,9 +15,11 @@ namespace Gui
 		public:
 			static void init();
 			
-			Toolbar& buttonAdd(const char_t* text);
+			Toolbar& buttonAdd(const char_t* text,uint32_t cmdid);
 			
-			Toolbar& toggleAdd(const char_t* text);
+			Toolbar& toggleAdd(const char_t* text,uint32_t cmdid);
+			
+			void toggleStateSet(uint32_t cmdid,bool state);
 			
 			static Toolbar* create(Gui& gui_obj
 				,uint32_t style_0,uint32_t style_1,Window* parent)
@@ -27,7 +29,7 @@ namespace Gui
 			Toolbar(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);
 
 		private:
-			unsigned int n_buttons;
+		//	unsigned int n_buttons;
 		};
 	};
 	

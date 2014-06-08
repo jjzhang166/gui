@@ -15,15 +15,12 @@ namespace Gui
 	class Dialog
 		{
 		public:
-			enum class MessageStatus:unsigned int
-				{
-				 OK
-				,CANCEL
-				,YES
-				,NO
-				};
+			static const unsigned int MESSAGESTATUS_OK=1;
+			static const unsigned int MESSAGESTATUS_CANCEL=2;
+			static const unsigned int MESSAGESTATUS_YES=6;
+			static const unsigned int MESSAGESTATUS_NO=7;
 
-			static MessageStatus messageDisplay(Window* parent
+			static unsigned int messageDisplay(Window* parent
 				,const Herbs::LogMessage& message
 				,const char_t* caption);
 				
@@ -35,3 +32,4 @@ namespace Gui
 	}
 
 #endif
+

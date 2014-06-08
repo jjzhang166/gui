@@ -26,6 +26,8 @@ namespace Gui
 			
 			void timeSet(Herbs::Timestamp time);
 			Herbs::Timestamp timeGet() const;
+			
+			void sizeMinimize();
 		
 		protected:
 			Datetime(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);

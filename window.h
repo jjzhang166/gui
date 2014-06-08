@@ -27,8 +27,7 @@ namespace Gui
 	class Font;
 	
 	/**Base class for a Window.
-	\nosubgrouping
-	*/
+	\nosubgrouping*/
 	class Window
 		{
 		friend class Dialog;
@@ -40,6 +39,8 @@ namespace Gui
 			
 			Window(Gui& gui_obj,const charsys_t* classname,uint32_t style_0
 				,uint32_t style_1,Window* parent);
+				
+			void destroy();
 			
 			virtual ~Window();
 			
@@ -118,15 +119,21 @@ namespace Gui
 			*/
 			void sizeRelative(float width, float height);
 			
-			/**Retrievs the size of the client area.
+			/**Retrieves the size of the client area.
 			*/
 			Vector::Vector2d<int> sizeClientGet() const;
 			
 			static Vector::Vector2d<int> sizeClientFromParam1(size_t param_1);
 			
-			/**Retrievs the full size of the window.
+			/**Retrieves the full size of the window.
 			*/
 			Vector::Vector2d<int> sizeWindowGet() const;
+			
+			/**Retrieves the absolute coordinates for the window.
+			*/
+			Vector::Vector2d<int> positionAbsoluteGet() const;
+			
+			virtual void sizeMinimize();
 			
 			/**}*/
 			
@@ -153,12 +160,7 @@ namespace Gui
 			static const int DisplayRestore=9;
 			static const int DisplayShowdefault=10;
 			static const int DisplayForceminimize=11;
-			static const int DisplayMax=11;
-			static const int DisplayParentclosing=1;
-			static const int DisplayOtherzoom=2;
-			static const int DisplayParentopening=3;
-			static const int DisplayOtherunzoom=4;
-			
+			static const int DisplayMax=11;			
 			
 			/**Sets a new window style.
 			*/
@@ -175,6 +177,8 @@ namespace Gui
 			/**Enables or disables the window.
 			*/
 			void enable(bool status);
+			
+			void focusSet();
 			
 			///*Styles
 			static const uint32_t StyleEx_dlgmodalframe=0x00000001;
@@ -231,6 +235,11 @@ namespace Gui
 			/**This method is called when an GUI event occurs.
 			*/
 			virtual size_t onEvent(uint32_t event_type,size_t param_0,size_t param_1)=0;
+			
+			/**This method is called when a user issues a command.
+			*/
+			virtual size_t onCommand(uint32_t event_status,uint32_t command_id,Window& source)
+				{return 0;}
 			
 			/**This method is called when the Window should update the value of any
 			associated data.
@@ -480,6 +489,12 @@ namespace Gui
 			
 			Gui& hostGet() const
 				{return m_gui;}
+				
+			Window* parentGet() const
+				{return m_parent;}
+			
+			void dialogActivate();
+			void dialogDeactivate();
 	
 		protected:
 				
@@ -488,6 +503,7 @@ namespace Gui
 			static void* handleGet(Window* win);
 			
 			Gui& m_gui;
+			Window* m_parent;
 			void* handle;
 		};
 	}

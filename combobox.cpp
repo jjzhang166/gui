@@ -30,12 +30,24 @@ Gui::Combobox& Gui::Combobox::itemAdd(const char_t* label)
 Gui::Combobox& Gui::Combobox::itemSelect(size_t index)
 	{
 	SendMessage((HWND)handle,CB_SETCURSEL,(WPARAM)index,0);
+	PostMessage((HWND)handle,SIZE_UPDATE,0,0);
 	return *this;
+	}
+
+void Gui::Combobox::itemsClear()
+	{
+	SendMessage((HWND)handle,CB_RESETCONTENT,0,0);
 	}
 	
 size_t Gui::Combobox::itemSelectedGet() const
 	{
 	return SendMessage((HWND)handle,CB_GETCURSEL,0,0);
+	}
+	
+void Gui::Combobox::sizeMinimize()
+	{
+	SendMessage((HWND)handle,SIZE_UPDATE,0,0);
+	Window::sizeMinimize();
 	}
 
 size_t Gui::Combobox::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
@@ -49,12 +61,11 @@ size_t Gui::Combobox::onEvent(uint32_t event_type,size_t param_0,size_t param_1)
 			{
 			auto size=sizeWindowGet();
 			sizeAbsolute(std::max(size.x,size_min.x),std::max(size.y,8*size_min.y));
+			InvalidateRect((HWND)handle,NULL,TRUE);
 			}
 			break;
 		case SIZE_UPDATE:
-			size_min=sizeContent(); //sizeGet((HWND)handle);
-			SendMessage((HWND)handle,MessageSize,0,0);
-			SendMessage(GetParent((HWND)handle),MessageSize,0,0);
+			size_min=sizeContent();
 			break;
 		}
 	return WindowSystem::onEvent(event_type,param_0,param_1);;
