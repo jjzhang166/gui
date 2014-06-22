@@ -19,6 +19,7 @@ namespace Gui
 				
 			bool checked() const;
 			void check(bool state);
+			void checkNoBlock(bool state);
 		
 		protected:
 			ButtonPush(Gui& gui_obj,uint32_t style_0,uint32_t style_1,Window* parent);

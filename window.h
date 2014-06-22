@@ -52,7 +52,7 @@ namespace Gui
 			*/
 			void idSet(uint32_t id_new);
 			
-			/**Retrievs the window id.
+			/**Retrieves the window id.
 			*/
 			uint32_t idGet() const;
 			
@@ -63,11 +63,11 @@ namespace Gui
 			
 			/**{*/
 			
-			/**Sets the window title or text if appliciable.
+			/**Sets the window title or text if applicable.
 			*/			
 			virtual void titleSet(const char_t* title);
 			
-			/**Retrievs the window title or text if appliciable.
+			/**Retrieves the window title or text if applicable.
 			*/
 			virtual Herbs::String titleGet() const;
 			

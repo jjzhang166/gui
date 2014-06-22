@@ -26,7 +26,11 @@ namespace Gui
 				,TOOLTIP
 				};
 	
-			Font(Element e);
+			Font(Element e)
+				{fromElement(e,1.0f);}
+				
+			Font(Element e,float scale_factor)
+				{fromElement(e,scale_factor);}
 			
 			Font(const Font&)=delete;
 			void operator=(const Font&)=delete;
@@ -43,6 +47,8 @@ namespace Gui
 			~Font();
 	
 		private:
+			void fromElement(Element e,float scale_factor);
+			
 			void* handle;
 		};
 	}

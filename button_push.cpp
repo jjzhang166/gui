@@ -16,3 +16,8 @@ void Gui::ButtonPush::check(bool state)
 	{
 	SendMessage((HWND)handle,BM_SETCHECK,state?BST_CHECKED:BST_UNCHECKED,0);
 	}
+	
+void Gui::ButtonPush::checkNoBlock(bool state)
+	{
+	PostMessage((HWND)handle,BM_SETCHECK,state?BST_CHECKED:BST_UNCHECKED,0);
+	}

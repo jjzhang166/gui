@@ -27,7 +27,8 @@ namespace Gui
 			static const int FILENAMEPROMPT_READ=0;
 			static const int FILENAMEPROMPT_WRITE=1;
 			
-			static bool prompt(Window* parent,Herbs::Path& path_in,int mode);
+			static bool prompt(Window* parent,const char_t* title
+				,Herbs::Path& path_in,int mode);
 		};
 	}
 

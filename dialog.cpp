@@ -73,7 +73,8 @@ unsigned int Gui::Dialog::messageDisplay(Window* parent
 		}
 	}
 
-bool Gui::Dialog::prompt(Window* parent,Herbs::Path& path_in,int mode)
+bool Gui::Dialog::prompt(Window* parent,const char_t* title
+	,Herbs::Path& path_in,int mode)
 	{
 	bool ret;
 	Herbs::StringSys path_str(0x7fff);
@@ -87,6 +88,7 @@ bool Gui::Dialog::prompt(Window* parent,Herbs::Path& path_in,int mode)
 	ofn.lpstrFilter=STRSYS("Alla filer\0*.*\0\0");
 	ofn.lpstrFile=path_str.begin();
 	ofn.nMaxFile=0x7fff;
+	ofn.lpstrTitle=Herbs::bufferSysPtr(Herbs::stringsys(title));
 	ofn.Flags=OFN_ENABLESIZING|OFN_HIDEREADONLY|OFN_LONGNAMES|OFN_NOTESTFILECREATE
 		|OFN_NODEREFERENCELINKS|OFN_PATHMUSTEXIST;
 	

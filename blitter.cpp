@@ -64,9 +64,9 @@ void Gui::Blitter::pixelsSet(const Vector::MatrixStorage<PixelBGRA<float> >& bit
 		{
 		for(size_t l=0;l<image_in.nColsGet();++l)
 			{
-			image_in(k,l).blue =255*std::min(bitmap(k,l).blue,1.0f);
-			image_in(k,l).green=255*std::min(bitmap(k,l).green,1.0f);
-			image_in(k,l).red  =255*std::min(bitmap(k,l).red,1.0f);
+			image_in(k,l).blue =255*std::min(std::max(bitmap(k,l).blue,0.0f),1.0f);
+			image_in(k,l).green=255*std::min(std::max(bitmap(k,l).blue,0.0f),1.0f);
+			image_in(k,l).red  =255*std::min(std::max(bitmap(k,l).blue,0.0f),1.0f);
 			image_in(k,l).alpha=255;
 			}
 		}
@@ -82,7 +82,7 @@ void Gui::Blitter::pixelsSet(const Vector::MatrixStorage<float>& graymap)
 		{
 		for(size_t l=0;l<image_in.nColsGet();++l)
 			{
-			float v=std::min( graymap(k,l), 1.0f);
+			float v=std::min( std::max(graymap(k,l),0.0f), 1.0f);
 			
 			image_in(k,l).blue =255*v;
 			image_in(k,l).green=255*v;
