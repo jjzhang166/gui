@@ -53,11 +53,17 @@ Gui::Window::~Window()
 	{
 	RemoveProp((HWND)handle,propname);
 	m_gui.windowCountDec();
+	PostMessage(NULL,MessageNull,0,0); //In case we are stuck in GetMessage
 	}
 	
 void Gui::Window::destroy()
 	{
 	DestroyWindow((HWND)handle);
+	}
+
+void Gui::Window::close()
+	{
+	SendNotifyMessage((HWND)handle,MessageClose,0,0);
 	}
 
 void Gui::Window::moveAbsolute(Vector::Vector2d<float> anchor

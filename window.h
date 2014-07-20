@@ -42,6 +42,11 @@ namespace Gui
 				
 			void destroy();
 			
+			/**Tries to close the Window. Call this if the window should be destroyed
+			 * from another thread.
+			*/
+			void close();
+			
 			virtual ~Window();
 			
 			/**\name Window identification*/

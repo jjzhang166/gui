@@ -13,6 +13,7 @@ target[
 
 #include "gui.h"
 #include <windows.h>
+#include <cstdio>
 
 int Gui::Gui::run()
 	{
@@ -28,7 +29,7 @@ int Gui::Gui::run()
 					{continue;}
 				}
 			TranslateMessage(&message);
-			DispatchMessage(&message);
+			DispatchMessage(&message);	
 			}
 		else
 			{return message.wParam;}
